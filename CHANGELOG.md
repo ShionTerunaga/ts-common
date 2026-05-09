@@ -1,5 +1,11 @@
 # ts-shared
 
+## 1.1.5
+
+### Patch Changes
+
+- [`c937756`](https://github.com/ShionTerunaga/ts-shared/commit/c9377566b7ebdb33c7bffc5fa2222e500731b13c) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - Vulnerability Response
+
 ## 1.1.4
 
 ### Patch Changes
