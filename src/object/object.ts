@@ -9,10 +9,9 @@ export function omitElementObject<T extends object, S extends keyof T>(
   });
 
   const typedResult: Dict<unknown> = {};
+
   for (const [k, v] of entries) {
-    if (k in obj) {
-      typedResult[k] = v;
-    }
+    typedResult[k] = v;
   }
 
   return typedResult as Omit<T, S>;
