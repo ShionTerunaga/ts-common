@@ -9,7 +9,7 @@ import {
   isErr,
   isOk,
   UNIT,
-} from "ts-shared";
+} from "../../src/result";
 
 describe("result", () => {
   it("createOk で作った値は isOK が true になる", () => {
