@@ -1,30 +1,31 @@
 import { describe, expect, it } from "vite-plus/test";
-import { optionUtility } from "ts-shared";
+import { createNone, createSome, isNone, isSome, optionConversion } from "../../src/option";
 
-describe("optionUtility", () => {
-  const { createSome, createNone, optionConversion } = optionUtility;
-
-  it("createSome で作った値は isSome が true になる", () => {
+describe("option", () => {
+  it("createSome で作った値は Some型になる", () => {
     const some = createSome("value");
 
-    expect(some.isSome).toBeTruthy();
+    expect(some.kind).toBe("some");
+    expect((some as any).value).toBe("value");
+  });
 
-    if (some.kind === "none") {
-      throw new Error("not expect");
-    }
+  it("isSomeでsomeの場合はtrueが返ってくる", () => {
+    const some = createSome("value");
 
-    expect(some.value).toBe("value");
+    expect(isSome(some)).toBeTruthy();
+  });
+
+  it("isSomeでnoneの場合にはfalseが返ってくる", () => {
+    const some = createSome("value");
+
+    expect(isNone(some)).toBeFalsy();
   });
 
   it("string型を与えたらSome型が返ってくる", () => {
     const result = optionConversion("string");
     expect(result.kind).toBe("some");
 
-    if (result.kind === "none") {
-      throw new Error("not expect");
-    }
-
-    expect(result.value).toBe("string");
+    expect((result as any).value).toBe("string");
   });
 
   it("nullを渡したらNone型が返ってくる", () => {
@@ -39,19 +40,19 @@ describe("optionUtility", () => {
     expect(result.kind).toBe("none");
   });
 
-  it("createNone で作った値は isNone が true になる", () => {
-    const none = createNone();
+  it("createNone で作った値は None", () => {
+    const none = createNone<never>();
 
-    expect(none.isNone).toBeTruthy();
+    expect(none.kind).toBe("none");
   });
 
   it("isSome は some でない場合 false を返す", () => {
-    const none = createNone();
-    expect(none.isSome).toBeFalsy();
+    const none = createNone<never>();
+    expect(isSome(none)).toBeFalsy();
   });
 
   it("isNone は none でない場合 false を返す", () => {
-    const some = createSome("value");
-    expect(some.isNone).toBeFalsy();
+    const none = createNone<never>();
+    expect(isNone(none)).toBeTruthy();
   });
 });

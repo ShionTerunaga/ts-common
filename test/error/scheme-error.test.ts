@@ -1,4 +1,4 @@
-import { SchemeError } from "ts-shared";
+import { SchemeError } from "../../src/error";
 import { describe, expect, it } from "vite-plus/test";
 
 describe("SchemeError", () => {

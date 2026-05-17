@@ -34,11 +34,11 @@ export const UNIT: Unit = Object.freeze({
   _unit: UNIT_SYMBOL,
 });
 
-export const checkPromiseVoid = async <E>({
+export async function checkPromiseVoid<E>({
   fn,
   err,
   finalFn = () => {},
-}: CheckPromiseVoid<E>): Promise<Result<Unit, E>> => {
+}: CheckPromiseVoid<E>): Promise<Result<Unit, E>> {
   try {
     await fn();
 
@@ -48,13 +48,13 @@ export const checkPromiseVoid = async <E>({
   } finally {
     finalFn();
   }
-};
+}
 
-export const checkResultReturn = <T, E>({
+export function checkResultReturn<T, E>({
   fn,
   err,
   finalFn = () => {},
-}: CheckResultReturn<T, E>): Result<T, E> => {
+}: CheckResultReturn<T, E>): Result<T, E> {
   try {
     const result = fn();
 
@@ -64,13 +64,13 @@ export const checkResultReturn = <T, E>({
   } finally {
     finalFn();
   }
-};
+}
 
-export const checkResultVoid = <E>({
+export function checkResultVoid<E>({
   fn,
   err,
   finalFn = () => {},
-}: CheckResultVoid<E>): Result<Unit, E> => {
+}: CheckResultVoid<E>): Result<Unit, E> {
   try {
     fn();
 
@@ -80,12 +80,13 @@ export const checkResultVoid = <E>({
   } finally {
     finalFn();
   }
-};
-export const checkPromiseReturn = async <T, E>({
+}
+
+export async function checkPromiseReturn<T, E>({
   fn,
   err,
   finalFn = () => {},
-}: CheckPromiseReturn<T, E>): Promise<Result<T, E>> => {
+}: CheckPromiseReturn<T, E>): Promise<Result<T, E>> {
   try {
     const result = await fn();
 
@@ -95,4 +96,4 @@ export const checkPromiseReturn = async <T, E>({
   } finally {
     finalFn();
   }
-};
+}
