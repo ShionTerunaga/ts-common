@@ -10,13 +10,166 @@ Shared TypeScript utilities packaged.
 npm i github:ShionTerunaga/ts-shared#release
 ```
 
+To pin a specific version, install from a version tag instead of `release`.
+
+```bash
+npm i github:ShionTerunaga/ts-shared#v1.5.1
+```
+
 ## Usage
 
 ```ts
-import { optionUtility, resultUtility } from "ts-shared";
+import { envParse, optionUtility, resultUtility } from "ts-shared";
+
+const env = envParse(process.env.API_TOKEN);
+
+if (env.isSome) {
+  console.log("token exists:", env.value);
+}
 ```
 
 The built files are committed to the `release` branch, so the package can be installed directly from this GitHub repository without running build scripts.
+Version tags are created in the `vxx.yy.zz` format, for example `v2.0.0`.
+
+## Included Utilities
+
+All public APIs are exported from the package root.
+
+### `optionUtility` and `envParse`
+
+Use `optionUtility` when you want to represent nullable values as an explicit `Some | None` union.
+Use `envParse` when you want to convert `process.env` style values into an `Option<string>`.
+
+```ts
+import { envParse, optionUtility } from "ts-shared";
+
+const token = envParse(process.env.API_TOKEN);
+const nickname = optionUtility.optionConversion(user.nickname);
+
+if (token.isSome) {
+  console.log(token.value);
+}
+
+const fallback = nickname.isSome ? nickname.value : "guest";
+```
+
+Available helpers:
+
+- `optionUtility.createSome(value)`
+- `optionUtility.createNone()`
+- `optionUtility.optionConversion(value)`
+
+### `resultUtility`
+
+Use `resultUtility` when you want functions to return `Ok | Err` values instead of throwing directly.
+
+```ts
+import { resultUtility } from "ts-shared";
+
+const result = await resultUtility.checkPromiseReturn({
+  fn: async () => {
+    return await fetchUser();
+  },
+  err: (error) => {
+    return resultUtility.createNg(error);
+  },
+});
+
+if (result.isOk) {
+  console.log(result.value);
+} else {
+  console.error(result.err);
+}
+```
+
+Available helpers:
+
+- `resultUtility.createOk(value)`
+- `resultUtility.createNg(error)`
+- `resultUtility.checkResultReturn({ fn, err, finalFn? })`
+- `resultUtility.checkResultVoid({ fn, err, finalFn? })`
+- `resultUtility.checkPromiseReturn({ fn, err, finalFn? })`
+- `resultUtility.checkPromiseVoid({ fn, err, finalFn? })`
+- `resultUtility.UNIT`
+
+### Error classes
+
+Use the custom error classes when you want consistent error names, codes, and metadata.
+
+```ts
+import { BadRequestError, SchemeError, ValidationError } from "ts-shared";
+
+throw new ValidationError({
+  field: "email",
+  issues: [{ path: "email", message: "Invalid format" }],
+});
+
+throw new SchemeError({
+  allowedSchemes: ["https"],
+  receivedScheme: "http",
+});
+
+throw new BadRequestError({
+  details: { reason: "Missing query parameter" },
+});
+```
+
+Included error exports:
+
+- `BaseError`
+- `BaseHttpError` and HTTP subclasses such as `BadRequestError`, `UnauthorizedError`, `NotFoundError`, `ConflictError`, `TooManyRequestsError`, and `InternalServerError`
+- `SchemeError`
+- `ValidationError`
+
+### `classMerger`
+
+Use `classMerger` to deduplicate class names while preserving order.
+
+```ts
+import { classMerger } from "ts-shared";
+
+const className = classMerger(["button", "", "button", "primary"]);
+// "button primary"
+```
+
+### `omitElementObject`
+
+Use `omitElementObject` to create a new object without specific keys.
+
+```ts
+import { omitElementObject } from "ts-shared";
+
+const user = {
+  id: 1,
+  name: "Shion",
+  password: "secret",
+};
+
+const safeUser = omitElementObject(user, ["password"]);
+```
+
+### `isNull` and `isUndefined`
+
+Use the type guards when narrowing unknown values.
+
+```ts
+import { isNull, isUndefined } from "ts-shared";
+
+function normalize(value: unknown) {
+  if (isNull(value) || isUndefined(value)) {
+    return "empty";
+  }
+
+  return String(value);
+}
+```
+
+### Utility types
+
+The package also exports these TypeScript-only utility types:
+
+- `Dict<T>`
+- `Without<T, K>`
 
 ## Development
 
