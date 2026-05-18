@@ -1,4 +1,22 @@
-# ts-shared
+# ts-utility-kit
+
+## 1.4.0
+
+### Minor Changes
+
+- [`8607c45`](https://github.com/ShionTerunaga/ts-utility-kit/commit/8607c459804c29dbf8a41a67393a573bfb8b5d95) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - Set README.md
+
+## 1.3.0
+
+### Minor Changes
+
+- [`4f8626f`](https://github.com/ShionTerunaga/ts-utility-kit/commit/4f8626f1cd9561f17c8b9b841bb7f42933ce3056) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - We have changed the package name.
+
+## 1.2.0
+
+### Minor Changes
+
+- [`dc09db3`](https://github.com/ShionTerunaga/ts-shared/commit/dc09db31df0e56262122273c9955659729966088) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - Set npm
 
 ## 1.1.5
 
