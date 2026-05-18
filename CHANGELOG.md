@@ -1,5 +1,11 @@
 # ts-shared
 
+## 1.2.0
+
+### Minor Changes
+
+- [`dc09db3`](https://github.com/ShionTerunaga/ts-shared/commit/dc09db31df0e56262122273c9955659729966088) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - Set npm
+
 ## 1.1.5
 
 ### Patch Changes
