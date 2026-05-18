@@ -20,7 +20,7 @@ const gitUserName = process.env.GIT_USER_NAME ?? "github-actions[bot]";
 const gitUserEmail =
   process.env.GIT_USER_EMAIL ?? "41898282+github-actions[bot]@users.noreply.github.com";
 const releaseBranch = process.env.RELEASE_BRANCH ?? "release";
-const keepPaths = ["dist", "LICENSE", "package.json"] as const;
+const keepPaths = ["dist", "LICENSE", "package.json", "README.md"] as const;
 
 interface ReleasePackageJson {
   name: string;
@@ -90,7 +90,7 @@ const packageJson: ReleasePackageJson = {
     sourcePackageJson.repository && typeof sourcePackageJson.repository === "object"
       ? (sourcePackageJson.repository as ReleasePackageJson["repository"])
       : undefined,
-  files: ["dist", "LICENSE", "package.json"],
+  files: ["dist", "LICENSE", "package.json", "README.md"],
   type: typeof sourcePackageJson.type === "string" ? sourcePackageJson.type : undefined,
   types: typeof sourcePackageJson.types === "string" ? sourcePackageJson.types : undefined,
   exports:
