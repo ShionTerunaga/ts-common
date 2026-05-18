@@ -1,15 +1,5 @@
 # ts-shared
 
-## 1.2.0
-
-### Minor Changes
-
-- [`45608b2`](https://github.com/ShionTerunaga/ts-shared/commit/45608b2af42234b4709a7bc00f44927fa657b43e) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - npm publish
-
-### Patch Changes
-
-- [#17](https://github.com/ShionTerunaga/ts-shared/pull/17) [`32f43a9`](https://github.com/ShionTerunaga/ts-shared/commit/32f43a9a5c4cbd300ada842995d957704ad877ba) Thanks [@ShionTerunaga](https://github.com/ShionTerunaga)! - Eliminate unnecessary if statements
-
 ## 1.1.5
 
 ### Patch Changes

@@ -10,6 +10,8 @@ Shared TypeScript utilities packaged.
 npm i github:ShionTerunaga/ts-shared#release
 ```
 
+Use this when you want to install directly from the built `release` branch on GitHub.
+
 To pin a specific version, install from a version tag instead of `release`.
 
 ```bash
@@ -188,6 +190,5 @@ Create a changeset for user-facing changes before opening or merging a PR.
 vp run changeset
 ```
 
-The `Release PR` workflow opens or updates the Changesets release PR into `main`. When that release PR branch (`changeset-release/main`) is merged into `main`, the `Sync Release` workflow reflects the merged commit to `release`. After `release` is updated, the `Publish Release` workflow rebuilds `dist/`, pushes the built artifacts if needed, generates release notes from the latest `CHANGELOG.md` entry, publishes the package to npm, and then creates or updates the Git tag and GitHub Release.
-Set the repository secret `NPM_TOKEN` so the publish workflow can authenticate to npm.
+The `Release PR` workflow opens or updates the Changesets release PR into `main`. When that release PR branch (`changeset-release/main`) is merged into `main`, the `Sync Release` workflow reflects the merged commit to `release`. After `release` is updated, the `Publish Release` workflow generates release notes from the latest `CHANGELOG.md` entry and then creates or updates the Git tag and GitHub Release.
 Each generated changelog item will also include the source PR and the contributor's GitHub username.

@@ -10,6 +10,8 @@ TypeScript の共通ユーティリティ集です。
 npm i github:ShionTerunaga/ts-shared#release
 ```
 
+GitHub 上のビルド済み `release` ブランチから直接入れたい場合はこちらです。
+
 特定バージョンに固定したい場合は、`release` の代わりにバージョンタグを指定してください。
 
 ```bash
@@ -188,6 +190,5 @@ vp build
 vp run changeset
 ```
 
-`Release PR` workflow が Changesets の release PR を `main` 向けに自動で作成または更新します。その release PR ブランチ (`changeset-release/main`) が `main` にマージされると、`Sync Release` workflow がそのコミットを `release` に反映します。`release` 更新後は `Publish Release` workflow が `dist/` の再ビルド、必要な配布ファイルの push、最新の `CHANGELOG.md` エントリからの release note 生成、npm への publish、タグ作成、GitHub Release の作成または更新まで自動で実行します。
-publish workflow が npm に認証できるよう、リポジトリ secrets に `NPM_TOKEN` を設定してください。
+`Release PR` workflow が Changesets の release PR を `main` 向けに自動で作成または更新します。その release PR ブランチ (`changeset-release/main`) が `main` にマージされると、`Sync Release` workflow がそのコミットを `release` に反映します。`release` 更新後は `Publish Release` workflow が最新の `CHANGELOG.md` エントリから release note を生成し、タグ作成と GitHub Release の作成または更新を行います。
 生成される changelog の各項目には、元 PR へのリンクとコントリビュータの GitHub ユーザー名も含まれます。
