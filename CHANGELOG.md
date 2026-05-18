@@ -1,5 +1,11 @@
 # ts-utility-kit
 
+## 1.4.0
+
+### Minor Changes
+
+- [`8607c45`](https://github.com/ShionTerunaga/ts-utility-kit/commit/8607c459804c29dbf8a41a67393a573bfb8b5d95) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - Set README.md
+
 ## 1.3.0
 
 ### Minor Changes

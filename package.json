@@ -1,6 +1,6 @@
 {
   "name": "ts-utility-kit",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Shared TypeScript utilities with generated type definitions.",
   "homepage": "https://github.com/ShionTerunaga/ts-shared#readme",
   "bugs": {
