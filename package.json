@@ -1,6 +1,6 @@
 {
-  "name": "ts-shared",
-  "version": "1.1.5",
+  "name": "ts-utility-kit",
+  "version": "1.4.0",
   "description": "Shared TypeScript utilities with generated type definitions.",
   "homepage": "https://github.com/ShionTerunaga/ts-shared#readme",
   "bugs": {
@@ -37,7 +37,7 @@
     "version-packages": "vp exec changeset version",
     "release:finalize": "vp pack && node --experimental-strip-types ./scripts/finalize-release.ts",
     "release:prepare-branch": "node --experimental-strip-types ./scripts/prepare-release-branch.ts",
-    "release:publish": "node --experimental-strip-types ./scripts/publish-release.ts"
+    "release:publish-github": "node --experimental-strip-types ./scripts/publish-github-release.ts"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",

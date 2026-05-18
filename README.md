@@ -1,69 +1,212 @@
-# ts-shared
+# ts-utility-kit
 
-Shared TypeScript utilities packaged.
+Shared TypeScript utilities packaged as focused subpath modules.
 
 [日本語 README](./README.ja.md)
+
+## Install From npm
+
+```bash
+npm i ts-utility-kit
+```
+
+Use this when you want to install the latest published version from the npm registry.
 
 ## Install From GitHub
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#release
+npm i github:ShionTerunaga/ts-utility-kit#release
 ```
 
-Install a fixed version by pinning a Git tag:
+Use this when you want to install directly from the built `release` branch on GitHub.
+
+To pin a specific version, install from a version tag instead of `release`.
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#v1.1.5
+npm i github:ShionTerunaga/ts-utility-kit#v1.4.0
 ```
 
-## Usage
+## Import Style
+
+This package exposes subpath modules. Import from the feature you need.
 
 ```ts
-import { omitElementObject } from "ts-shared/object";
-import { createSome, isSome, optionConversion } from "ts-shared/option";
-import { createErr, createOk, isOk } from "ts-shared/result";
-
-const maybeName = optionConversion("Shion");
-
-if (isSome(maybeName)) {
-  console.log(maybeName.value);
-}
-
-const someUser = createSome({ id: 1, name: "Shion", password: "secret" });
-
-if (isSome(someUser)) {
-  const safeUser = omitElementObject(someUser.value, ["password"]);
-  console.log(safeUser);
-}
-
-function validateUserName(name: string) {
-  if (name.length === 0) {
-    return createErr(new Error("name is required"));
-  }
-
-  return createOk({ name });
-}
-
-const saveUser = validateUserName("Shion");
-
-if (isOk(saveUser)) {
-  console.log(saveUser.value.name);
-} else {
-  console.error(saveUser.err);
-}
+import { ValidationError } from "ts-utility-kit/error";
+import { omitElementObject } from "ts-utility-kit/object";
+import { createSome } from "ts-utility-kit/option";
 ```
 
 Available subpath exports:
 
-- `ts-shared/error`: Base application errors plus reusable HTTP, validation, and scheme-specific error classes.
-- `ts-shared/is`: Small type guards such as `isNull` and `isUndefined`.
-- `ts-shared/merger`: Utility for merging class name arrays while removing empty values and duplicates.
-- `ts-shared/object`: Object helpers such as `omitElementObject` for safely dropping keys from objects.
-- `ts-shared/option`: `Option<T>` helpers for representing nullable values as `Some` or `None`.
-- `ts-shared/result`: `Result<T, E>` helpers for representing success or failure without throwing.
-- `ts-shared/types`: Shared utility types such as `Dict<T>` and stricter omission helpers.
+- `ts-utility-kit/error`
+- `ts-utility-kit/is`
+- `ts-utility-kit/merger`
+- `ts-utility-kit/object`
+- `ts-utility-kit/option`
+- `ts-utility-kit/result`
+- `ts-utility-kit/types`
 
-The built files are committed to the `release` branch, so the package can be installed directly from this GitHub repository without running build scripts. For reproducible installs, prefer pinning a release tag such as `#v1.1.5`.
+## Package Guide
+
+### `ts-utility-kit/error`
+
+Use this when you want application errors with consistent names, codes, status values, or metadata.
+
+```ts
+import { BadRequestError, NotFoundError, SchemeError, ValidationError } from "ts-utility-kit/error";
+
+throw new ValidationError({
+  field: "email",
+  issues: [{ path: "email", message: "Invalid format" }],
+});
+
+throw new SchemeError({
+  allowedSchemes: ["https"],
+  receivedScheme: "http",
+});
+
+throw new NotFoundError({
+  details: { resource: "user", id: "42" },
+});
+```
+
+Included exports:
+
+- `BaseError`
+- `BaseHttpError`
+- HTTP error classes such as `BadRequestError`, `UnauthorizedError`, `ForbiddenError`, `NotFoundError`, `ConflictError`, `PayloadTooLargeError`, and `UnsupportedMediaTypeError`
+- `SchemeError`
+- `ValidationError`
+
+### `ts-utility-kit/is`
+
+Use these small type guards when narrowing nullable values.
+
+```ts
+import { isNull, isUndefined } from "ts-utility-kit/is";
+
+function normalize(value: unknown) {
+  if (isNull(value) || isUndefined(value)) {
+    return "empty";
+  }
+
+  return String(value);
+}
+```
+
+### `ts-utility-kit/merger`
+
+Use this when you want to merge class name arrays while removing empty entries and duplicates.
+
+```ts
+import { classMerger } from "ts-utility-kit/merger";
+
+const className = classMerger(["button", "", "button", "primary"]);
+// "button primary"
+```
+
+### `ts-utility-kit/object`
+
+Use this when you want to copy an object without specific keys.
+
+```ts
+import { omitElementObject } from "ts-utility-kit/object";
+
+const user = {
+  id: 1,
+  name: "Shion",
+  password: "secret",
+};
+
+const safeUser = omitElementObject(user, ["password"]);
+```
+
+### `ts-utility-kit/option`
+
+Use this when you want to represent nullable values explicitly as `Some` or `None`.
+
+```ts
+import { createNone, createSome, isNone, isSome, optionConversion } from "ts-utility-kit/option";
+
+const token = optionConversion(process.env.API_TOKEN);
+
+if (isSome(token)) {
+  console.log(token.value);
+}
+
+const fallback = isNone(token) ? "guest" : token.value;
+const fixed = createSome("ready");
+const empty = createNone<string>();
+```
+
+Included exports:
+
+- `Option<T>`
+- `createSome(value)`
+- `createNone()`
+- `isSome(option)`
+- `isNone(option)`
+- `optionConversion(value)`
+
+### `ts-utility-kit/result`
+
+Use this when you want functions to return `Result<T, E>` instead of throwing directly.
+
+```ts
+import { UNIT, checkPromiseReturn, createErr, createOk, isErr, isOk } from "ts-utility-kit/result";
+
+const result = await checkPromiseReturn({
+  fn: async () => fetchUser(),
+  err: (error) => createErr(error),
+});
+
+if (isOk(result)) {
+  console.log(result.value);
+}
+
+if (isErr(result)) {
+  console.error(result.err);
+}
+
+const done = createOk(UNIT);
+```
+
+Included exports:
+
+- `Result<T, E>`
+- `createOk(value)`
+- `createErr(error)`
+- `isOk(result)`
+- `isErr(result)`
+- `UNIT` and `Unit`
+- `checkResultReturn({ fn, err, finalFn? })`
+- `checkResultVoid({ fn, err, finalFn? })`
+- `checkPromiseReturn({ fn, err, finalFn? })`
+- `checkPromiseVoid({ fn, err, finalFn? })`
+
+### `ts-utility-kit/types`
+
+Use this when you only need shared TypeScript utility types.
+
+```ts
+import type { Dict, Without } from "ts-utility-kit/types";
+
+type User = {
+  id: string;
+  name: string;
+  password: string;
+};
+
+type PublicUser = Without<User, "password">;
+type UserMap = Dict<PublicUser>;
+```
+
+Included exports:
+
+- `Dict<T>`
+- `Without<T, K>`
+
+The built files are committed to the `release` branch, so the package can be installed directly from this GitHub repository without running build scripts.
 
 ## Development
 
@@ -82,5 +225,4 @@ Create a changeset for user-facing changes before opening or merging a PR.
 vp run changeset
 ```
 
-The `Release PR` workflow opens or updates the Changesets release PR into `main`. When that release PR branch (`changeset-release/main`) is merged into `main`, the `Sync Release` workflow reflects the merged commit to `release`. After `release` is updated, the `Publish Release` workflow rebuilds `dist/`, pushes the built artifacts if needed, and then creates or updates the Git tag and GitHub Release.
-Each generated changelog item will also include the source PR and the contributor's GitHub username.
+The `Release PR` workflow opens or updates the Changesets release PR into `main`. When that release PR branch (`changeset-release/main`) is merged into `main`, the `Sync Release` workflow reflects the merged commit to `release`. After `release` is updated, the `Publish Release` workflow generates release notes from the latest `CHANGELOG.md` entry and then creates or updates the Git tag and GitHub Release. The `Publish npm Package` workflow runs after the GitHub Release is published and pushes the same version to npm with OIDC trusted publishing.

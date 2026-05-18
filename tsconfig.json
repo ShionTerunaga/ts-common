@@ -5,7 +5,7 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "paths": {
-      "ts-shared": ["./src/*"]
+      "ts-utility-kit": ["./src/index.ts"]
     },
     "types": ["node"],
     "allowImportingTsExtensions": true,

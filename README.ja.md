@@ -1,69 +1,212 @@
-# ts-shared
+# ts-utility-kit
 
-TypeScript の共通ユーティリティ集です。
+TypeScript の共通ユーティリティを、用途ごとのサブパス module としてまとめたパッケージです。
 
 [English README](./README.md)
+
+## npm registry からインストール
+
+```bash
+npm i ts-utility-kit
+```
+
+npm registry で公開されている最新版を通常インストールしたい場合はこちらです。
 
 ## GitHub からインストール
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#release
+npm i github:ShionTerunaga/ts-utility-kit#release
 ```
 
-固定バージョンで入れたい場合は、Git タグを指定します。
+GitHub 上のビルド済み `release` ブランチから直接入れたい場合はこちらです。
+
+特定バージョンに固定したい場合は、`release` の代わりにバージョンタグを指定してください。
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#v1.1.5
+npm i github:ShionTerunaga/ts-utility-kit#v1.4.0
 ```
 
-## 使い方
+## import 方法
+
+このパッケージは root ではなく、機能ごとのサブパスから import します。
 
 ```ts
-import { omitElementObject } from "ts-shared/object";
-import { createSome, isSome, optionConversion } from "ts-shared/option";
-import { createErr, createOk, isOk } from "ts-shared/result";
+import { ValidationError } from "ts-utility-kit/error";
+import { omitElementObject } from "ts-utility-kit/object";
+import { createSome } from "ts-utility-kit/option";
+```
 
-const maybeName = optionConversion("Shion");
+利用できるサブパス export:
 
-if (isSome(maybeName)) {
-  console.log(maybeName.value);
-}
+- `ts-utility-kit/error`
+- `ts-utility-kit/is`
+- `ts-utility-kit/merger`
+- `ts-utility-kit/object`
+- `ts-utility-kit/option`
+- `ts-utility-kit/result`
+- `ts-utility-kit/types`
 
-const someUser = createSome({ id: 1, name: "Shion", password: "secret" });
+## パッケージ別ガイド
 
-if (isSome(someUser)) {
-  const safeUser = omitElementObject(someUser.value, ["password"]);
-  console.log(safeUser);
-}
+### `ts-utility-kit/error`
 
-function validateUserName(name: string) {
-  if (name.length === 0) {
-    return createErr(new Error("name is required"));
+エラー名、コード、HTTP status、追加メタデータをそろえて扱いたいときに使います。
+
+```ts
+import { BadRequestError, NotFoundError, SchemeError, ValidationError } from "ts-utility-kit/error";
+
+throw new ValidationError({
+  field: "email",
+  issues: [{ path: "email", message: "Invalid format" }],
+});
+
+throw new SchemeError({
+  allowedSchemes: ["https"],
+  receivedScheme: "http",
+});
+
+throw new NotFoundError({
+  details: { resource: "user", id: "42" },
+});
+```
+
+主な export:
+
+- `BaseError`
+- `BaseHttpError`
+- `BadRequestError`, `UnauthorizedError`, `ForbiddenError`, `NotFoundError`, `ConflictError`, `PayloadTooLargeError`, `UnsupportedMediaTypeError` などの HTTP エラー
+- `SchemeError`
+- `ValidationError`
+
+### `ts-utility-kit/is`
+
+nullable な値や `unknown` を絞り込みたいときの小さな型ガードです。
+
+```ts
+import { isNull, isUndefined } from "ts-utility-kit/is";
+
+function normalize(value: unknown) {
+  if (isNull(value) || isUndefined(value)) {
+    return "empty";
   }
 
-  return createOk({ name });
-}
-
-const saveUser = validateUserName("Shion");
-
-if (isOk(saveUser)) {
-  console.log(saveUser.value.name);
-} else {
-  console.error(saveUser.err);
+  return String(value);
 }
 ```
 
-利用できるサブパス export は次のとおりです。
+### `ts-utility-kit/merger`
 
-- `ts-shared/error`: アプリケーション共通の `BaseError` と、HTTP・バリデーション・スキーム用の各種エラークラスをまとめています。
-- `ts-shared/is`: `isNull` や `isUndefined` などの小さな型ガードを提供します。
-- `ts-shared/merger`: class 名の配列を結合し、空文字や重複を取り除くユーティリティです。
-- `ts-shared/object`: `omitElementObject` など、オブジェクトを安全に加工するヘルパーを提供します。
-- `ts-shared/option`: nullable な値を `Some` / `None` として扱うための `Option<T>` ユーティリティです。
-- `ts-shared/result`: 例外を投げずに成功 / 失敗を表現するための `Result<T, E>` ユーティリティです。
-- `ts-shared/types`: `Dict<T>` や、より厳密な omit 用の型など、共通で使う型定義をまとめています。
+class 名の配列を結合し、空文字や重複を除きたいときに使います。
 
-ビルド済みファイルを `release` ブランチに含めているため、ビルドスクリプトを実行せずにこの GitHub リポジトリを直接インストールできます。再現性を重視する場合は、`#v1.1.5` のようにリリースタグを固定して使うのがおすすめです。
+```ts
+import { classMerger } from "ts-utility-kit/merger";
+
+const className = classMerger(["button", "", "button", "primary"]);
+// "button primary"
+```
+
+### `ts-utility-kit/object`
+
+object から特定のキーを除いた新しい値を作りたいときに使います。
+
+```ts
+import { omitElementObject } from "ts-utility-kit/object";
+
+const user = {
+  id: 1,
+  name: "Shion",
+  password: "secret",
+};
+
+const safeUser = omitElementObject(user, ["password"]);
+```
+
+### `ts-utility-kit/option`
+
+nullable な値を `Some` / `None` として明示的に扱いたいときに使います。
+
+```ts
+import { createNone, createSome, isNone, isSome, optionConversion } from "ts-utility-kit/option";
+
+const token = optionConversion(process.env.API_TOKEN);
+
+if (isSome(token)) {
+  console.log(token.value);
+}
+
+const fallback = isNone(token) ? "guest" : token.value;
+const fixed = createSome("ready");
+const empty = createNone<string>();
+```
+
+主な export:
+
+- `Option<T>`
+- `createSome(value)`
+- `createNone()`
+- `isSome(option)`
+- `isNone(option)`
+- `optionConversion(value)`
+
+### `ts-utility-kit/result`
+
+例外をそのまま投げる代わりに、成功と失敗を `Result<T, E>` として返したいときに使います。
+
+```ts
+import { UNIT, checkPromiseReturn, createErr, createOk, isErr, isOk } from "ts-utility-kit/result";
+
+const result = await checkPromiseReturn({
+  fn: async () => fetchUser(),
+  err: (error) => createErr(error),
+});
+
+if (isOk(result)) {
+  console.log(result.value);
+}
+
+if (isErr(result)) {
+  console.error(result.err);
+}
+
+const done = createOk(UNIT);
+```
+
+主な export:
+
+- `Result<T, E>`
+- `createOk(value)`
+- `createErr(error)`
+- `isOk(result)`
+- `isErr(result)`
+- `UNIT` と `Unit`
+- `checkResultReturn({ fn, err, finalFn? })`
+- `checkResultVoid({ fn, err, finalFn? })`
+- `checkPromiseReturn({ fn, err, finalFn? })`
+- `checkPromiseVoid({ fn, err, finalFn? })`
+
+### `ts-utility-kit/types`
+
+実行時コードではなく、共通の TypeScript utility type だけ使いたいときに向いています。
+
+```ts
+import type { Dict, Without } from "ts-utility-kit/types";
+
+type User = {
+  id: string;
+  name: string;
+  password: string;
+};
+
+type PublicUser = Without<User, "password">;
+type UserMap = Dict<PublicUser>;
+```
+
+主な export:
+
+- `Dict<T>`
+- `Without<T, K>`
+
+ビルド済みファイルを `release` ブランチに含めているため、ビルドスクリプトを実行せずにこの GitHub リポジトリを直接インストールできます。
 
 ## 開発
 
@@ -82,5 +225,4 @@ vp build
 vp run changeset
 ```
 
-`Release PR` workflow が Changesets の release PR を `main` 向けに自動で作成または更新します。その release PR ブランチ (`changeset-release/main`) が `main` にマージされると、`Sync Release` workflow がそのコミットを `release` に反映します。`release` 更新後は `Publish Release` workflow が `dist/` の再ビルド、必要な配布ファイルの push、タグ作成、GitHub Release の作成または更新まで自動で実行します。
-生成される changelog の各項目には、元 PR へのリンクとコントリビュータの GitHub ユーザー名も含まれます。
+`Release PR` workflow が Changesets の release PR を `main` 向けに自動で作成または更新します。その release PR ブランチ (`changeset-release/main`) が `main` にマージされると、`Sync Release` workflow がそのコミットを `release` に反映します。`release` 更新後は `Publish Release` workflow が最新の `CHANGELOG.md` エントリから release note を生成し、タグ作成と GitHub Release の作成または更新を行います。その後 `Publish npm Package` workflow が GitHub Release の公開をきっかけに実行され、OIDC trusted publishing で npm へ同じバージョンを公開します。

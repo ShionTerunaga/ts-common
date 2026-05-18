@@ -3,7 +3,7 @@ import { parseLatestReleaseNotes } from "../../scripts/release-notes";
 
 describe("parseLatestReleaseNotes", () => {
   it("returns the latest release section from the changelog", () => {
-    const changelog = `# ts-shared
+    const changelog = `# ts-utility-kit
 
 ## 1.2.3
 
@@ -29,7 +29,8 @@ describe("parseLatestReleaseNotes", () => {
   });
 
   it("supports CRLF changelog content", () => {
-    const changelog = "# ts-shared\r\n\r\n## 2.0.0\r\n\r\n### Major Changes\r\n\r\n- Ship it\r\n";
+    const changelog =
+      "# ts-utility-kit\r\n\r\n## 2.0.0\r\n\r\n### Major Changes\r\n\r\n- Ship it\r\n";
 
     expect(parseLatestReleaseNotes(changelog)).toEqual({
       version: "2.0.0",
@@ -42,7 +43,7 @@ describe("parseLatestReleaseNotes", () => {
   });
 
   it("throws when the changelog does not contain a release section", () => {
-    expect(() => parseLatestReleaseNotes("# ts-shared\n")).toThrow(
+    expect(() => parseLatestReleaseNotes("# ts-utility-kit\n")).toThrow(
       "Could not find a release section in CHANGELOG.md",
     );
   });
