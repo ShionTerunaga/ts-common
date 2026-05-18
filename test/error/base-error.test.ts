@@ -1,5 +1,5 @@
-import { BaseError } from "../../src/error";
 import { describe, expect, it } from "vite-plus/test";
+import { BaseError } from "../../src/error";
 
 describe("BaseError", () => {
   it("渡した値が各プロパティに代入される", () => {
