@@ -1,4 +1,4 @@
-import { ValidationError } from "ts-shared";
+import { ValidationError } from "../../src/index";
 import { describe, expect, it } from "vite-plus/test";
 
 describe("ValidationError", () => {

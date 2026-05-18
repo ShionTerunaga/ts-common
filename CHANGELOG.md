@@ -1,4 +1,4 @@
-# ts-shared
+# ts-utility-kit
 
 ## 1.1.5
 

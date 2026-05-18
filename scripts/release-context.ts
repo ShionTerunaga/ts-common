@@ -51,7 +51,7 @@ export function hasPublishedVersion(packageName: string, packageVersion: string,
 }
 
 export function createReleaseContext(releaseRef = process.env.RELEASE_REF ?? "origin/release") {
-  const tempDir = mkdtempSync(join(tmpdir(), "ts-shared-release-"));
+  const tempDir = mkdtempSync(join(tmpdir(), "ts-utility-kit-release-"));
   const publishDir = join(tempDir, "publish");
   const notesPath = join(tempDir, "release-notes.md");
 

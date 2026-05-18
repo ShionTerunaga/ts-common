@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(scriptDir, "..");
-const tempDir = mkdtempSync(join(tmpdir(), "ts-shared-release-branch-"));
+const tempDir = mkdtempSync(join(tmpdir(), "ts-utility-kit-release-branch-"));
 
 const gitUserName = process.env.GIT_USER_NAME ?? "github-actions[bot]";
 const gitUserEmail =

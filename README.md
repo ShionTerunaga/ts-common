@@ -1,13 +1,21 @@
-# ts-shared
+# ts-utility-kit
 
 Shared TypeScript utilities packaged.
 
 [日本語 README](./README.ja.md)
 
+## Install From npm
+
+```bash
+npm i ts-utility-kit
+```
+
+Use this when you want to install the latest published version from the npm registry.
+
 ## Install From GitHub
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#release
+npm i github:ShionTerunaga/ts-utility-kit#release
 ```
 
 Use this when you want to install directly from the built `release` branch on GitHub.
@@ -15,13 +23,13 @@ Use this when you want to install directly from the built `release` branch on Gi
 To pin a specific version, install from a version tag instead of `release`.
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#v1.5.1
+npm i github:ShionTerunaga/ts-utility-kit#v1.5.1
 ```
 
 ## Usage
 
 ```ts
-import { envParse, optionUtility, resultUtility } from "ts-shared";
+import { envParse, optionUtility, resultUtility } from "ts-utility-kit";
 
 const env = envParse(process.env.API_TOKEN);
 
@@ -43,7 +51,7 @@ Use `optionUtility` when you want to represent nullable values as an explicit `S
 Use `envParse` when you want to convert `process.env` style values into an `Option<string>`.
 
 ```ts
-import { envParse, optionUtility } from "ts-shared";
+import { envParse, optionUtility } from "ts-utility-kit";
 
 const token = envParse(process.env.API_TOKEN);
 const nickname = optionUtility.optionConversion(user.nickname);
@@ -66,7 +74,7 @@ Available helpers:
 Use `resultUtility` when you want functions to return `Ok | Err` values instead of throwing directly.
 
 ```ts
-import { resultUtility } from "ts-shared";
+import { resultUtility } from "ts-utility-kit";
 
 const result = await resultUtility.checkPromiseReturn({
   fn: async () => {
@@ -99,7 +107,7 @@ Available helpers:
 Use the custom error classes when you want consistent error names, codes, and metadata.
 
 ```ts
-import { BadRequestError, SchemeError, ValidationError } from "ts-shared";
+import { BadRequestError, SchemeError, ValidationError } from "ts-utility-kit";
 
 throw new ValidationError({
   field: "email",
@@ -128,7 +136,7 @@ Included error exports:
 Use `classMerger` to deduplicate class names while preserving order.
 
 ```ts
-import { classMerger } from "ts-shared";
+import { classMerger } from "ts-utility-kit";
 
 const className = classMerger(["button", "", "button", "primary"]);
 // "button primary"
@@ -139,7 +147,7 @@ const className = classMerger(["button", "", "button", "primary"]);
 Use `omitElementObject` to create a new object without specific keys.
 
 ```ts
-import { omitElementObject } from "ts-shared";
+import { omitElementObject } from "ts-utility-kit";
 
 const user = {
   id: 1,
@@ -155,7 +163,7 @@ const safeUser = omitElementObject(user, ["password"]);
 Use the type guards when narrowing unknown values.
 
 ```ts
-import { isNull, isUndefined } from "ts-shared";
+import { isNull, isUndefined } from "ts-utility-kit";
 
 function normalize(value: unknown) {
   if (isNull(value) || isUndefined(value)) {

@@ -1,4 +1,4 @@
-import { BaseError } from "ts-shared";
+import { BaseError } from "../../src/index";
 import { describe, expect, it } from "vite-plus/test";
 
 describe("BaseError", () => {

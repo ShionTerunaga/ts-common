@@ -1,4 +1,4 @@
-import { envParse } from "ts-shared";
+import { envParse } from "../../src/index";
 import { describe, expect, it } from "vite-plus/test";
 
 describe("env-parse", () => {

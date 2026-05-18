@@ -5,6 +5,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "ts-utility-kit": fileURLToPath(new URL("./src/index.ts", import.meta.url)),
     },
   },
   pack: {

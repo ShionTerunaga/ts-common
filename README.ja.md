@@ -1,13 +1,21 @@
-# ts-shared
+# ts-utility-kit
 
 TypeScript の共通ユーティリティ集です。
 
 [English README](./README.md)
 
+## npm registry からインストール
+
+```bash
+npm i ts-utility-kit
+```
+
+npm registry で公開されている最新版を通常インストールしたい場合はこちらです。
+
 ## GitHub からインストール
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#release
+npm i github:ShionTerunaga/ts-utility-kit#release
 ```
 
 GitHub 上のビルド済み `release` ブランチから直接入れたい場合はこちらです。
@@ -15,13 +23,13 @@ GitHub 上のビルド済み `release` ブランチから直接入れたい場�
 特定バージョンに固定したい場合は、`release` の代わりにバージョンタグを指定してください。
 
 ```bash
-npm i github:ShionTerunaga/ts-shared#v1.5.1
+npm i github:ShionTerunaga/ts-utility-kit#v1.5.1
 ```
 
 ## 使い方
 
 ```ts
-import { envParse, optionUtility, resultUtility } from "ts-shared";
+import { envParse, optionUtility, resultUtility } from "ts-utility-kit";
 
 const env = envParse(process.env.API_TOKEN);
 
@@ -43,7 +51,7 @@ if (env.isSome) {
 `envParse` は、`process.env` のような値を `Option<string>` に変換したいときに使います。
 
 ```ts
-import { envParse, optionUtility } from "ts-shared";
+import { envParse, optionUtility } from "ts-utility-kit";
 
 const token = envParse(process.env.API_TOKEN);
 const nickname = optionUtility.optionConversion(user.nickname);
@@ -66,7 +74,7 @@ const fallback = nickname.isSome ? nickname.value : "guest";
 `resultUtility` は、例外をそのまま投げる代わりに `Ok | Err` を返したいときに使います。
 
 ```ts
-import { resultUtility } from "ts-shared";
+import { resultUtility } from "ts-utility-kit";
 
 const result = await resultUtility.checkPromiseReturn({
   fn: async () => {
@@ -99,7 +107,7 @@ if (result.isOk) {
 独自のエラー名、コード、メタデータをそろえて扱いたいときは、用意されているエラークラスを使います。
 
 ```ts
-import { BadRequestError, SchemeError, ValidationError } from "ts-shared";
+import { BadRequestError, SchemeError, ValidationError } from "ts-utility-kit";
 
 throw new ValidationError({
   field: "email",
@@ -128,7 +136,7 @@ throw new BadRequestError({
 `classMerger` は、順序を保ったまま class 名の重複を除きたいときに使います。
 
 ```ts
-import { classMerger } from "ts-shared";
+import { classMerger } from "ts-utility-kit";
 
 const className = classMerger(["button", "", "button", "primary"]);
 // "button primary"
@@ -139,7 +147,7 @@ const className = classMerger(["button", "", "button", "primary"]);
 `omitElementObject` は、特定のキーを除いた新しい object を作りたいときに使います。
 
 ```ts
-import { omitElementObject } from "ts-shared";
+import { omitElementObject } from "ts-utility-kit";
 
 const user = {
   id: 1,
@@ -155,7 +163,7 @@ const safeUser = omitElementObject(user, ["password"]);
 これらの type guard は、`unknown` な値を絞り込みたいときに使います。
 
 ```ts
-import { isNull, isUndefined } from "ts-shared";
+import { isNull, isUndefined } from "ts-utility-kit";
 
 function normalize(value: unknown) {
   if (isNull(value) || isUndefined(value)) {
