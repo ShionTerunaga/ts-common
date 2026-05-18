@@ -1,5 +1,11 @@
 # ts-utility-kit
 
+## 1.3.0
+
+### Minor Changes
+
+- [`4f8626f`](https://github.com/ShionTerunaga/ts-utility-kit/commit/4f8626f1cd9561f17c8b9b841bb7f42933ce3056) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - We have changed the package name.
+
 ## 1.2.0
 
 ### Minor Changes
