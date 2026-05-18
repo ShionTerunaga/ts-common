@@ -1,4 +1,4 @@
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
@@ -13,6 +13,7 @@ const gitUserName = process.env.GIT_USER_NAME ?? "github-actions[bot]";
 const gitUserEmail =
   process.env.GIT_USER_EMAIL ?? "41898282+github-actions[bot]@users.noreply.github.com";
 const releaseRef = process.env.RELEASE_REF ?? "origin/release";
+const publishDir = join(tempDir, "publish");
 
 function run(
   command: string,
@@ -36,6 +37,18 @@ function cleanup() {
   rmSync(tempDir, { recursive: true, force: true });
 }
 
+function hasPublishedVersion(packageName: string, packageVersion: string) {
+  try {
+    execFileSync("npm", ["view", `${packageName}@${packageVersion}`, "version"], {
+      cwd: publishDir,
+      stdio: "ignore",
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 process.on("exit", cleanup);
 process.on("SIGINT", () => {
   cleanup();
@@ -47,10 +60,12 @@ process.on("SIGTERM", () => {
 });
 
 const packageJson = JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf8")) as {
+  name: string;
   version: string;
 };
 const changelog = readFileSync(join(repoRoot, "CHANGELOG.md"), "utf8");
 const latestRelease = parseLatestReleaseNotes(changelog);
+const packageName = packageJson.name;
 const version = packageJson.version;
 
 if (latestRelease.version !== version) {
@@ -65,9 +80,18 @@ const notesPath = join(tempDir, "release-notes.md");
 const releaseSha = run("git", ["rev-parse", releaseRef], repoRoot, "pipe").trim();
 
 writeFileSync(notesPath, latestRelease.notes);
+mkdirSync(publishDir, { recursive: true });
+run("git", ["archive", releaseRef, "--format=tar", "-o", join(tempDir, "release.tar")]);
+run("tar", ["-xf", join(tempDir, "release.tar"), "-C", publishDir], tempDir);
 
 run("git", ["config", "user.name", gitUserName]);
 run("git", ["config", "user.email", gitUserEmail]);
+
+if (hasPublishedVersion(packageName, version)) {
+  console.log(`Skipping npm publish because ${packageName}@${version} is already available.`);
+} else {
+  run("npm", ["publish", "--access", "public"], publishDir);
+}
 
 if (canRun("git", ["rev-parse", "--verify", `refs/tags/${tag}`])) {
   const existingTagSha = run("git", ["rev-list", "-n", "1", tag], repoRoot, "pipe").trim();

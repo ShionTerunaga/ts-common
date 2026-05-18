@@ -38,4 +38,5 @@ jobs:
       - name: Publish tag and GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: node --experimental-strip-types ./scripts/publish-release.ts
