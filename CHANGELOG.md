@@ -1,5 +1,11 @@
 # ts-utility-kit
 
+## 1.4.1
+
+### Patch Changes
+
+- [#31](https://github.com/ShionTerunaga/ts-utility-kit/pull/31) [`8162b60`](https://github.com/ShionTerunaga/ts-utility-kit/commit/8162b605188c82887e7024ef8a7a00f7a7c6a8ce) Thanks [@ShionTerunaga](https://github.com/ShionTerunaga)! - I have updated the README based on the development environment.
+
 ## 1.4.0
 
 ### Minor Changes
