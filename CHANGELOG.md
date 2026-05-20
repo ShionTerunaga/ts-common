@@ -1,11 +1,5 @@
 # ts-utility-kit
 
-## 1.5.0
-
-### Minor Changes
-
-- [#28](https://github.com/ShionTerunaga/ts-utility-kit/pull/28) [`0a42a3f`](https://github.com/ShionTerunaga/ts-utility-kit/commit/0a42a3f4ca7484fdd9b3670701a5673873e9873c) Thanks [@ShionTerunaga](https://github.com/ShionTerunaga)! - I realized that `vite` wasn't necessary, so I switched to `rolldown`.
-
 ## 1.4.0
 
 ### Minor Changes
