@@ -1,0 +1,18 @@
+pre-push:
+  commands:
+    format:
+      run: pnpm format
+    lint:
+      run: pnpm lint
+    test:
+      run: pnpm test
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}
+
+post-merge:
+  commands:
+    install:
+      run: pnpm i

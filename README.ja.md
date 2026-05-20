@@ -184,18 +184,20 @@ TypeScript 専用の utility type も export しています。
 ## 開発
 
 ```bash
-vp install
-vp check
-vp test
-vp build
+pnpm install
+pnpm check
+pnpm test
+pnpm build
 ```
+
+`pnpm build` では、ライブラリのエントリポイントを Rolldown で bundle しつつ、公開型定義を `dts-bundle-generator` で `dist/index.d.ts` 1 ファイルにまとめます。型チェック自体は引き続き TypeScript 7 beta (`tsgo`) です。
 
 ## リリースフロー
 
 ユーザー向けの変更を含む PR では、事前に changeset を作成してください。
 
 ```bash
-vp run changeset
+pnpm changeset
 ```
 
 `Release PR` workflow が Changesets の release PR を `main` 向けに自動で作成または更新します。その release PR ブランチ (`changeset-release/main`) が `main` にマージされると、`Sync Release` workflow がそのコミットを `release` に反映します。`release` 更新後は `Publish Release` workflow が最新の `CHANGELOG.md` エントリから release note を生成し、タグ作成と GitHub Release の作成または更新を行います。

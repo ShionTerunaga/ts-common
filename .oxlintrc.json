@@ -1,0 +1,7 @@
+{
+  "plugins": ["import", "unicorn", "typescript"],
+  "rules": {
+    "eqeqeq": "error",
+    "no-console": "off"
+  }
+}

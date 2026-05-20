@@ -1,4 +1,4 @@
-import { type Option, optionUtility } from "./option.ts";
+import { type Option, optionUtility } from "./option.js";
 
 export function envParse(env: string | undefined): Option<string> {
   const { optionConversion } = optionUtility;
