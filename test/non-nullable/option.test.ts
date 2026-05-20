@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vite-plus/test";
-import { optionUtility } from "../../src/index";
+import { describe, expect, it } from "vitest";
+import { optionUtility } from "../../src/index.js";
 
 describe("optionUtility", () => {
   const { createSome, createNone, optionConversion } = optionUtility;

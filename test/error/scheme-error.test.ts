@@ -1,5 +1,5 @@
-import { SchemeError } from "../../src/index";
-import { describe, expect, it } from "vite-plus/test";
+import { SchemeError } from "../../src/index.js";
+import { describe, expect, it } from "vitest";
 
 describe("SchemeError", () => {
   it("渡した値が各プロパティに代入される", () => {

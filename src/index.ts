@@ -1,5 +1,5 @@
-export { classMerger } from "./merger/class-merger";
-export { BaseError, type BaseErrorOptions } from "./error/base-error";
+export { classMerger } from "./merger/class-merger.js";
+export { BaseError, type BaseErrorOptions } from "./error/base-error.js";
 export {
   BadGatewayError,
   BadRequestError,
@@ -24,16 +24,16 @@ export {
   UnauthorizedError,
   UnprocessableEntityError,
   UnsupportedMediaTypeError,
-} from "./error/http-error";
-export { SchemeError, type SchemeErrorOptions } from "./error/scheme-error";
+} from "./error/http-error.js";
+export { SchemeError, type SchemeErrorOptions } from "./error/scheme-error.js";
 export {
   ValidationError,
   type ValidationErrorOptions,
   type ValidationIssue,
-} from "./error/validation-error";
-export { isNull, isUndefined } from "./common/is";
-export { omitElementObject } from "./object/object";
-export { envParse } from "./non-nullable/env-parse";
-export { optionUtility, type Option } from "./non-nullable/option";
-export { resultUtility, type Result, type Unit } from "./non-nullable/result";
-export type { Dict, Without } from "./types/object";
+} from "./error/validation-error.js";
+export { isNull, isUndefined } from "./common/is.js";
+export { omitElementObject } from "./object/object.js";
+export { envParse } from "./non-nullable/env-parse.js";
+export { optionUtility, type Option } from "./non-nullable/option.js";
+export { resultUtility, type Result, type Unit } from "./non-nullable/result.js";
+export type { Dict, Without } from "./types/object.js";

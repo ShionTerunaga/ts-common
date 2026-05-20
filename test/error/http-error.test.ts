@@ -21,8 +21,8 @@ import {
   UnauthorizedError,
   UnprocessableEntityError,
   UnsupportedMediaTypeError,
-} from "../../src/index";
-import { describe, expect, it } from "vite-plus/test";
+} from "../../src/index.js";
+import { describe, expect, it } from "vitest";
 
 describe("BaseHttpError", () => {
   it("渡した値が各プロパティに代入される", () => {

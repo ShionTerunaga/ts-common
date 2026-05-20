@@ -1,5 +1,5 @@
-import { envParse } from "../../src/index";
-import { describe, expect, it } from "vite-plus/test";
+import { envParse } from "../../src/index.js";
+import { describe, expect, it } from "vitest";
 
 describe("env-parse", () => {
   it("envが文字列として返ってきた場合はoption.someで値を返す", () => {
