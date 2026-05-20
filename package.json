@@ -63,5 +63,8 @@
     "overrides": {
       "yaml": "^2.8.3"
     }
+  },
+  "dependencies": {
+    "ts-utility-kit": "^1.4.0"
   }
 }
