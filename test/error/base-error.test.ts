@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vite-plus/test";
 import { BaseError } from "../../src/error";
+import { describe, expect, it } from "vitest";
 
 describe("BaseError", () => {
   it("渡した値が各プロパティに代入される", () => {
@@ -27,7 +27,9 @@ describe("BaseError", () => {
       details: { retryable: false },
     });
 
-    expect(Object.prototype.propertyIsEnumerable.call(error, "cause")).toBeFalsy();
+    expect(
+      Object.prototype.propertyIsEnumerable.call(error, "cause"),
+    ).toBeFalsy();
     expect(error.cause).toBe(cause);
   });
 });

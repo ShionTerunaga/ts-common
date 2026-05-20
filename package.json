@@ -1,6 +1,6 @@
 {
   "name": "ts-utility-kit",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Shared TypeScript utilities with generated type definitions.",
   "homepage": "https://github.com/ShionTerunaga/ts-shared#readme",
   "bugs": {
@@ -18,7 +18,7 @@
     "README.md"
   ],
   "type": "module",
-  "types": "./dist/index.d.mts",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./error": "./dist/error/index.mjs",
     "./is": "./dist/is/index.mjs",
@@ -30,12 +30,20 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack",
-    "check": "vp check",
-    "test": "vp test",
-    "changeset": "vp exec changeset",
-    "version-packages": "vp exec changeset version",
-    "release:finalize": "vp pack && node --experimental-strip-types ./scripts/finalize-release.ts",
+    "build": "pnpm run clean && pnpm run build:bundle && pnpm run build:types",
+    "build:bundle": "rolldown -c rolldown.config.ts",
+    "build:types": "dts-bundle-generator --no-banner --project tsconfig.build.json -o dist/index.d.ts src/index.ts",
+    "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\"",
+    "prepare": "lefthook install",
+    "typecheck": "tsgo --noEmit -p tsconfig.json",
+    "lint": "oxlint . --tsconfig tsconfig.json",
+    "lint:fix": "oxlint . --tsconfig tsconfig.json --fix",
+    "format": "oxfmt --check .",
+    "format:write": "oxfmt --write .",
+    "check": "pnpm run format && pnpm run lint && pnpm run typecheck",
+    "test": "vitest run",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
     "release:prepare-branch": "node --experimental-strip-types ./scripts/prepare-release-branch.ts",
     "release:publish-github": "node --experimental-strip-types ./scripts/publish-github-release.ts"
   },
@@ -44,9 +52,14 @@
     "@changesets/cli": "^2.30.0",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
-    "@typescript/native-preview": "7.0.0-dev.20260323.1",
-    "vite": "8.0.5",
-    "vite-plus": "catalog:"
+    "@types/node": "^24.10.1",
+    "@typescript/native-preview": "beta",
+    "dts-bundle-generator": "^9.5.1",
+    "lefthook": "^1.8.4",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "rolldown": "^1.0.0-beta.37",
+    "vitest": "^3.2.3"
   },
   "engines": {
     "node": ">=22.12.0"
@@ -54,9 +67,7 @@
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
     "overrides": {
-      "yaml": "^2.8.3",
-      "vite@>=8.0.0 <=8.0.4": ">=8.0.5",
-      "vite-plus@<=0.1.16": ">=0.1.17"
+      "yaml": "^2.8.3"
     }
   }
 }

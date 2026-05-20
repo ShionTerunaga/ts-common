@@ -1,5 +1,5 @@
 import { omitElementObject } from "../../src/object";
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it } from "vitest";
 
 describe("object", () => {
   it("omitElementObject", () => {

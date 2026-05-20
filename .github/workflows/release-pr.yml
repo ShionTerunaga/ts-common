@@ -29,16 +29,18 @@ jobs:
         with:
           node-version: 22.12.0
 
-      - name: Install Vite+
-        run: npm install --global vite-plus@latest @typescript/native-preview@7.0.0-dev.20260323.1
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
 
       - name: Install dependencies
-        run: vp install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Create or update release PR
         uses: changesets/action@v1
         with:
-          version: vp run version-packages
+          version: pnpm run version-packages
           commit: "chore: version packages"
           title: "chore: version packages"
           createGithubReleases: false

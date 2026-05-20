@@ -1,5 +1,11 @@
-import { describe, expect, it } from "vite-plus/test";
-import { createNone, createSome, isNone, isSome, optionConversion } from "../../src/option";
+import {
+  createNone,
+  createSome,
+  isNone,
+  isSome,
+  optionConversion,
+} from "../../src/option";
+import { describe, expect, it } from "vitest";
 
 describe("option", () => {
   it("createSome で作った値は Some型になる", () => {

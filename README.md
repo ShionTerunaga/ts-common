@@ -184,18 +184,20 @@ The package also exports these TypeScript-only utility types:
 ## Development
 
 ```bash
-vp install
-vp check
-vp test
-vp build
+pnpm install
+pnpm check
+pnpm test
+pnpm build
 ```
+
+`pnpm build` bundles the library entrypoint with Rolldown and flattens the public type definitions into `dist/index.d.ts` using `dts-bundle-generator`. Type checking still runs on TypeScript 7 beta (`tsgo`).
 
 ## Release Flow
 
 Create a changeset for user-facing changes before opening or merging a PR.
 
 ```bash
-vp run changeset
+pnpm changeset
 ```
 
 The `Release PR` workflow opens or updates the Changesets release PR into `main`. When that release PR branch (`changeset-release/main`) is merged into `main`, the `Sync Release` workflow reflects the merged commit to `release`. After `release` is updated, the `Publish Release` workflow generates release notes from the latest `CHANGELOG.md` entry and then creates or updates the Git tag and GitHub Release.
