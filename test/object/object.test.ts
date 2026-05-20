@@ -1,4 +1,5 @@
 import { omitElementObject } from "../../src/object";
+
 import { describe, expect, it } from "vitest";
 
 describe("object", () => {
