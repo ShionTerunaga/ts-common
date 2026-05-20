@@ -1,5 +1,5 @@
 import { classMerger } from "../../src/merger";
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it } from "vitest";
 
 describe("class-merger", () => {
   it("空配列では空文字が返る", () => {

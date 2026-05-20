@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it } from "vitest";
 import { parseLatestReleaseNotes } from "../../scripts/release-notes";
 
 describe("parseLatestReleaseNotes", () => {

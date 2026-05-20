@@ -1,4 +1,4 @@
-import type { Dict } from "../types/object";
+import type { Dict } from "../types/object.js";
 
 export function omitElementObject<T extends object, S extends keyof T>(
   obj: T,

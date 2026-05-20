@@ -1,4 +1,3 @@
-import { describe, expect, it } from "vite-plus/test";
 import {
   checkPromiseReturn,
   checkPromiseVoid,
@@ -10,6 +9,7 @@ import {
   isOk,
   UNIT,
 } from "../../src/result";
+import { describe, expect, it } from "vitest";
 
 describe("result", () => {
   it("createOk で作った値は isOK が true になる", () => {

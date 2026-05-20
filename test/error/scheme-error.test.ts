@@ -1,5 +1,5 @@
 import { SchemeError } from "../../src/error";
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it } from "vitest";
 
 describe("SchemeError", () => {
   it("渡した値が各プロパティに代入される", () => {
@@ -28,6 +28,8 @@ describe("SchemeError", () => {
       receivedScheme: "https",
     });
 
-    expect(error.message).toBe('Invalid scheme: expected one of [mailto], received "https"');
+    expect(error.message).toBe(
+      'Invalid scheme: expected one of [mailto], received "https"',
+    );
   });
 });

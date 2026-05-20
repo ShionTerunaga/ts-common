@@ -1,5 +1,5 @@
 import { ValidationError } from "../../src/error";
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it } from "vitest";
 
 describe("ValidationError", () => {
   it("渡した値が各プロパティに代入される", () => {

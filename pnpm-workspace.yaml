@@ -7,20 +7,13 @@ catalog:
   "@commitlint/cli": ^20.5.0
   "@commitlint/config-conventional": ^20.5.0
   "@types/node": ^24
-  "@typescript/native-preview": 7.0.0-dev.20260323.1
-  typescript: ^5
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vite-plus: ^0.1.18
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
+  "@typescript/native-preview": beta
+  oxfmt: ^0.45.0
+  oxlint: ^1.60.0
+  vitest: ^3.2.3
 
 catalogMode: prefer
 overrides:
-  vite: "catalog:"
-  vitest: "catalog:"
+  yaml: ^2.8.3
 peerDependencyRules:
-  allowAny:
-    - vite
-    - vitest
-  allowedVersions:
-    vite: "*"
-    vitest: "*"
+  allowAny: []
