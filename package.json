@@ -41,6 +41,9 @@
     "release:prepare-branch": "node --experimental-strip-types ./scripts/prepare-release-branch.ts",
     "release:publish-github": "node --experimental-strip-types ./scripts/publish-github-release.ts"
   },
+  "dependencies": {
+    "ts-utility-kit": "link:"
+  },
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
@@ -63,8 +66,5 @@
     "overrides": {
       "yaml": "^2.8.3"
     }
-  },
-  "dependencies": {
-    "ts-utility-kit": "^1.4.0"
   }
 }
