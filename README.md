@@ -53,12 +53,7 @@ Available subpath exports:
 Use this when you want application errors with consistent names, codes, status values, or metadata.
 
 ```ts
-import {
-  BadRequestError,
-  NotFoundError,
-  SchemeError,
-  ValidationError,
-} from "ts-utility-kit/error";
+import { BadRequestError, NotFoundError, SchemeError, ValidationError } from "ts-utility-kit/error";
 
 throw new ValidationError({
   field: "email",
@@ -131,13 +126,7 @@ const safeUser = omitElementObject(user, ["password"]);
 Use this when you want to represent nullable values explicitly as `Some` or `None`.
 
 ```ts
-import {
-  createNone,
-  createSome,
-  isNone,
-  isSome,
-  optionConversion,
-} from "ts-utility-kit/option";
+import { createNone, createSome, isNone, isSome, optionConversion } from "ts-utility-kit/option";
 
 const token = optionConversion(process.env.API_TOKEN);
 
@@ -164,14 +153,7 @@ Included exports:
 Use this when you want functions to return `Result<T, E>` instead of throwing directly.
 
 ```ts
-import {
-  UNIT,
-  checkPromiseReturn,
-  createErr,
-  createOk,
-  isErr,
-  isOk,
-} from "ts-utility-kit/result";
+import { UNIT, checkPromiseReturn, createErr, createOk, isErr, isOk } from "ts-utility-kit/result";
 
 const result = await checkPromiseReturn({
   fn: async () => fetchUser(),

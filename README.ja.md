@@ -53,12 +53,7 @@ import { createSome } from "ts-utility-kit/option";
 エラー名、コード、HTTP status、追加メタデータをそろえて扱いたいときに使います。
 
 ```ts
-import {
-  BadRequestError,
-  NotFoundError,
-  SchemeError,
-  ValidationError,
-} from "ts-utility-kit/error";
+import { BadRequestError, NotFoundError, SchemeError, ValidationError } from "ts-utility-kit/error";
 
 throw new ValidationError({
   field: "email",
@@ -131,13 +126,7 @@ const safeUser = omitElementObject(user, ["password"]);
 nullable な値を `Some` / `None` として明示的に扱いたいときに使います。
 
 ```ts
-import {
-  createNone,
-  createSome,
-  isNone,
-  isSome,
-  optionConversion,
-} from "ts-utility-kit/option";
+import { createNone, createSome, isNone, isSome, optionConversion } from "ts-utility-kit/option";
 
 const token = optionConversion(process.env.API_TOKEN);
 
@@ -164,14 +153,7 @@ const empty = createNone<string>();
 例外をそのまま投げる代わりに、成功と失敗を `Result<T, E>` として返したいときに使います。
 
 ```ts
-import {
-  UNIT,
-  checkPromiseReturn,
-  createErr,
-  createOk,
-  isErr,
-  isOk,
-} from "ts-utility-kit/result";
+import { UNIT, checkPromiseReturn, createErr, createOk, isErr, isOk } from "ts-utility-kit/result";
 
 const result = await checkPromiseReturn({
   fn: async () => fetchUser(),
