@@ -1,5 +1,21 @@
 # ts-utility-kit
 
+## 2.0.0
+
+### Major Changes
+
+- [#21](https://github.com/ShionTerunaga/ts-utility-kit/pull/21) [`ad2ee75`](https://github.com/ShionTerunaga/ts-utility-kit/commit/ad2ee751ab001202a76fc0d739ffbe3267d3c51b) Thanks [@ShionTerunaga](https://github.com/ShionTerunaga)! - Refactor the `Result` API by splitting it into `result-core` and `result-process`, and re-export the new modules from the package entrypoint.
+
+  The public API now uses `createErr`, `isOk`, `isErr`, and `kind`-based checks instead of the previous `createNg` and boolean flag style.
+
+- [#21](https://github.com/ShionTerunaga/ts-utility-kit/pull/21) [`ad2ee75`](https://github.com/ShionTerunaga/ts-utility-kit/commit/ad2ee751ab001202a76fc0d739ffbe3267d3c51b) Thanks [@ShionTerunaga](https://github.com/ShionTerunaga)! - Change the way you import
+
+### Patch Changes
+
+- [#21](https://github.com/ShionTerunaga/ts-utility-kit/pull/21) [`ad2ee75`](https://github.com/ShionTerunaga/ts-utility-kit/commit/ad2ee751ab001202a76fc0d739ffbe3267d3c51b) Thanks [@ShionTerunaga](https://github.com/ShionTerunaga)! - Eliminate unnecessary if statements
+
+- [#21](https://github.com/ShionTerunaga/ts-utility-kit/pull/21) [`ad2ee75`](https://github.com/ShionTerunaga/ts-utility-kit/commit/ad2ee751ab001202a76fc0d739ffbe3267d3c51b) Thanks [@ShionTerunaga](https://github.com/ShionTerunaga)! - I removed the unnecessary functions.
+
 ## 1.4.1
 
 ### Patch Changes
