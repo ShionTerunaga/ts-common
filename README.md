@@ -191,11 +191,11 @@ Use this when you only need shared TypeScript utility types.
 ```ts
 import type { Dict, Without } from "ts-utility-kit/types";
 
-type User = {
+interface User {
   id: string;
   name: string;
   password: string;
-};
+}
 
 type PublicUser = Without<User, "password">;
 type UserMap = Dict<PublicUser>;
@@ -207,24 +207,3 @@ Included exports:
 - `Without<T, K>`
 
 The built files are committed to the `release` branch, so the package can be installed directly from this GitHub repository without running build scripts.
-
-## Development
-
-```bash
-pnpm install
-pnpm check
-pnpm test
-pnpm build
-```
-
-`pnpm build` bundles the library entrypoint with Rolldown and flattens the public type definitions into `dist/index.d.ts` using `dts-bundle-generator`. Type checking still runs on TypeScript 7 beta (`tsgo`).
-
-## Release Flow
-
-Create a changeset for user-facing changes before opening or merging a PR.
-
-```bash
-pnpm changeset
-```
-
-The `Release PR` workflow opens or updates the Changesets release PR into `main`. When that release PR branch (`changeset-release/main`) is merged into `main`, the `Sync Release` workflow reflects the merged commit to `release`. After `release` is updated, the `Publish Release` workflow generates release notes from the latest `CHANGELOG.md` entry and then creates or updates the Git tag and GitHub Release. The `Publish npm Package` workflow runs after the GitHub Release is published and pushes the same version to npm with OIDC trusted publishing.

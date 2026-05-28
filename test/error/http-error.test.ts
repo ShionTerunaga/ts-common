@@ -22,6 +22,7 @@ import {
   UnprocessableEntityError,
   UnsupportedMediaTypeError,
 } from "../../src/error";
+
 import { describe, expect, it } from "vitest";
 
 describe("BaseHttpError", () => {
