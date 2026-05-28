@@ -1,4 +1,4 @@
-import { BaseError, type BaseErrorOptions } from "./base-error.js";
+import { BaseError, type BaseErrorOptions } from "./base-error";
 
 export interface HttpErrorOptions extends BaseErrorOptions {
   expose?: boolean;

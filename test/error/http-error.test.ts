@@ -21,7 +21,7 @@ import {
   UnauthorizedError,
   UnprocessableEntityError,
   UnsupportedMediaTypeError,
-} from "../../src/index.js";
+} from "../../src/error";
 import { describe, expect, it } from "vitest";
 
 describe("BaseHttpError", () => {

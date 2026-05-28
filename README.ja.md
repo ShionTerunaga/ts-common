@@ -1,6 +1,6 @@
 # ts-utility-kit
 
-TypeScript の共通ユーティリティ集です。
+TypeScript の共通ユーティリティを、用途ごとのサブパス module としてまとめたパッケージです。
 
 [English README](./README.md)
 
@@ -23,91 +23,37 @@ GitHub 上のビルド済み `release` ブランチから直接入れたい場�
 特定バージョンに固定したい場合は、`release` の代わりにバージョンタグを指定してください。
 
 ```bash
-npm i github:ShionTerunaga/ts-utility-kit#v1.5.1
+npm i github:ShionTerunaga/ts-utility-kit#v1.4.0
 ```
 
-## 使い方
+## import 方法
+
+このパッケージは root ではなく、機能ごとのサブパスから import します。
 
 ```ts
-import { envParse, optionUtility, resultUtility } from "ts-utility-kit";
-
-const env = envParse(process.env.API_TOKEN);
-
-if (env.isSome) {
-  console.log("token exists:", env.value);
-}
+import { ValidationError } from "ts-utility-kit/error";
+import { omitElementObject } from "ts-utility-kit/object";
+import { createSome } from "ts-utility-kit/option";
 ```
 
-ビルド済みファイルを `release` ブランチに含めているため、ビルドスクリプトを実行せずにこの GitHub リポジトリを直接インストールできます。
-バージョンタグは `vxx.yy.zz` 形式で作成しており、例えば `v2.0.0` のようになります。
+利用できるサブパス export:
 
-## 含まれているユーティリティ
+- `ts-utility-kit/error`
+- `ts-utility-kit/is`
+- `ts-utility-kit/merger`
+- `ts-utility-kit/object`
+- `ts-utility-kit/option`
+- `ts-utility-kit/result`
+- `ts-utility-kit/types`
 
-公開 API はすべてパッケージのルートから import できます。
+## パッケージ別ガイド
 
-### `optionUtility` と `envParse`
+### `ts-utility-kit/error`
 
-`optionUtility` は、nullable な値を明示的な `Some | None` の union として扱いたいときに使います。
-`envParse` は、`process.env` のような値を `Option<string>` に変換したいときに使います。
-
-```ts
-import { envParse, optionUtility } from "ts-utility-kit";
-
-const token = envParse(process.env.API_TOKEN);
-const nickname = optionUtility.optionConversion(user.nickname);
-
-if (token.isSome) {
-  console.log(token.value);
-}
-
-const fallback = nickname.isSome ? nickname.value : "guest";
-```
-
-利用できる helper:
-
-- `optionUtility.createSome(value)`
-- `optionUtility.createNone()`
-- `optionUtility.optionConversion(value)`
-
-### `resultUtility`
-
-`resultUtility` は、例外をそのまま投げる代わりに `Ok | Err` を返したいときに使います。
+エラー名、コード、HTTP status、追加メタデータをそろえて扱いたいときに使います。
 
 ```ts
-import { resultUtility } from "ts-utility-kit";
-
-const result = await resultUtility.checkPromiseReturn({
-  fn: async () => {
-    return await fetchUser();
-  },
-  err: (error) => {
-    return resultUtility.createNg(error);
-  },
-});
-
-if (result.isOk) {
-  console.log(result.value);
-} else {
-  console.error(result.err);
-}
-```
-
-利用できる helper:
-
-- `resultUtility.createOk(value)`
-- `resultUtility.createNg(error)`
-- `resultUtility.checkResultReturn({ fn, err, finalFn? })`
-- `resultUtility.checkResultVoid({ fn, err, finalFn? })`
-- `resultUtility.checkPromiseReturn({ fn, err, finalFn? })`
-- `resultUtility.checkPromiseVoid({ fn, err, finalFn? })`
-- `resultUtility.UNIT`
-
-### エラークラス
-
-独自のエラー名、コード、メタデータをそろえて扱いたいときは、用意されているエラークラスを使います。
-
-```ts
-import { BadRequestError, SchemeError, ValidationError } from "ts-utility-kit";
+import { BadRequestError, NotFoundError, SchemeError, ValidationError } from "ts-utility-kit/error";
 
 throw new ValidationError({
   field: "email",
@@ -119,51 +65,25 @@ throw new SchemeError({
   receivedScheme: "http",
 });
 
-throw new BadRequestError({
-  details: { reason: "Missing query parameter" },
+throw new NotFoundError({
+  details: { resource: "user", id: "42" },
 });
 ```
 
-含まれるエクスポート:
+主な export:
 
 - `BaseError`
-- `BaseHttpError` と、`BadRequestError`, `UnauthorizedError`, `NotFoundError`, `ConflictError`, `TooManyRequestsError`, `InternalServerError` などの HTTP エラー
+- `BaseHttpError`
+- `BadRequestError`, `UnauthorizedError`, `ForbiddenError`, `NotFoundError`, `ConflictError`, `PayloadTooLargeError`, `UnsupportedMediaTypeError` などの HTTP エラー
 - `SchemeError`
 - `ValidationError`
 
-### `classMerger`
+### `ts-utility-kit/is`
 
-`classMerger` は、順序を保ったまま class 名の重複を除きたいときに使います。
-
-```ts
-import { classMerger } from "ts-utility-kit";
-
-const className = classMerger(["button", "", "button", "primary"]);
-// "button primary"
-```
-
-### `omitElementObject`
-
-`omitElementObject` は、特定のキーを除いた新しい object を作りたいときに使います。
+nullable な値や `unknown` を絞り込みたいときの小さな型ガードです。
 
 ```ts
-import { omitElementObject } from "ts-utility-kit";
-
-const user = {
-  id: 1,
-  name: "Shion",
-  password: "secret",
-};
-
-const safeUser = omitElementObject(user, ["password"]);
-```
-
-### `isNull` と `isUndefined`
-
-これらの type guard は、`unknown` な値を絞り込みたいときに使います。
-
-```ts
-import { isNull, isUndefined } from "ts-utility-kit";
+import { isNull, isUndefined } from "ts-utility-kit/is";
 
 function normalize(value: unknown) {
   if (isNull(value) || isUndefined(value)) {
@@ -174,31 +94,116 @@ function normalize(value: unknown) {
 }
 ```
 
-### ユーティリティ型
+### `ts-utility-kit/merger`
 
-TypeScript 専用の utility type も export しています。
+class 名の配列を結合し、空文字や重複を除きたいときに使います。
+
+```ts
+import { classMerger } from "ts-utility-kit/merger";
+
+const className = classMerger(["button", "", "button", "primary"]);
+// "button primary"
+```
+
+### `ts-utility-kit/object`
+
+object から特定のキーを除いた新しい値を作りたいときに使います。
+
+```ts
+import { omitElementObject } from "ts-utility-kit/object";
+
+const user = {
+  id: 1,
+  name: "Shion",
+  password: "secret",
+};
+
+const safeUser = omitElementObject(user, ["password"]);
+```
+
+### `ts-utility-kit/option`
+
+nullable な値を `Some` / `None` として明示的に扱いたいときに使います。
+
+```ts
+import { createNone, createSome, isNone, isSome, optionConversion } from "ts-utility-kit/option";
+
+const token = optionConversion(process.env.API_TOKEN);
+
+if (isSome(token)) {
+  console.log(token.value);
+}
+
+const fallback = isNone(token) ? "guest" : token.value;
+const fixed = createSome("ready");
+const empty = createNone<string>();
+```
+
+主な export:
+
+- `Option<T>`
+- `createSome(value)`
+- `createNone()`
+- `isSome(option)`
+- `isNone(option)`
+- `optionConversion(value)`
+
+### `ts-utility-kit/result`
+
+例外をそのまま投げる代わりに、成功と失敗を `Result<T, E>` として返したいときに使います。
+
+```ts
+import { UNIT, checkPromiseReturn, createErr, createOk, isErr, isOk } from "ts-utility-kit/result";
+
+const result = await checkPromiseReturn({
+  fn: async () => fetchUser(),
+  err: (error) => createErr(error),
+});
+
+if (isOk(result)) {
+  console.log(result.value);
+}
+
+if (isErr(result)) {
+  console.error(result.err);
+}
+
+const done = createOk(UNIT);
+```
+
+主な export:
+
+- `Result<T, E>`
+- `createOk(value)`
+- `createErr(error)`
+- `isOk(result)`
+- `isErr(result)`
+- `UNIT` と `Unit`
+- `checkResultReturn({ fn, err, finalFn? })`
+- `checkResultVoid({ fn, err, finalFn? })`
+- `checkPromiseReturn({ fn, err, finalFn? })`
+- `checkPromiseVoid({ fn, err, finalFn? })`
+
+### `ts-utility-kit/types`
+
+実行時コードではなく、共通の TypeScript utility type だけ使いたいときに向いています。
+
+```ts
+import type { Dict, Without } from "ts-utility-kit/types";
+
+interface User {
+  id: string;
+  name: string;
+  password: string;
+}
+
+type PublicUser = Without<User, "password">;
+type UserMap = Dict<PublicUser>;
+```
+
+主な export:
 
 - `Dict<T>`
 - `Without<T, K>`
 
-## 開発
-
-```bash
-pnpm install
-pnpm check
-pnpm test
-pnpm build
-```
-
-`pnpm build` では、ライブラリのエントリポイントを Rolldown で bundle しつつ、公開型定義を `dts-bundle-generator` で `dist/index.d.ts` 1 ファイルにまとめます。型チェック自体は引き続き TypeScript 7 beta (`tsgo`) です。
-
-## リリースフロー
-
-ユーザー向けの変更を含む PR では、事前に changeset を作成してください。
-
-```bash
-pnpm changeset
-```
-
-`Release PR` workflow が Changesets の release PR を `main` 向けに自動で作成または更新します。その release PR ブランチ (`changeset-release/main`) が `main` にマージされると、`Sync Release` workflow がそのコミットを `release` に反映します。`release` 更新後は `Publish Release` workflow が最新の `CHANGELOG.md` エントリから release note を生成し、タグ作成と GitHub Release の作成または更新を行います。
-生成される changelog の各項目には、元 PR へのリンクとコントリビュータの GitHub ユーザー名も含まれます。
+ビルド済みファイルを `release` ブランチに含めているため、ビルドスクリプトを実行せずにこの GitHub リポジトリを直接インストールできます。

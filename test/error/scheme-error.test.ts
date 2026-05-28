@@ -1,4 +1,4 @@
-import { SchemeError } from "../../src/index.js";
+import { SchemeError } from "../../src/error";
 import { describe, expect, it } from "vitest";
 
 describe("SchemeError", () => {

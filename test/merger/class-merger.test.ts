@@ -1,4 +1,4 @@
-import { classMerger } from "../../src/index.js";
+import { classMerger } from "../../src/merger";
 import { describe, expect, it } from "vitest";
 
 describe("class-merger", () => {

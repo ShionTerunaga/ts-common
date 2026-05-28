@@ -1,4 +1,4 @@
-import { ValidationError } from "../../src/index.js";
+import { ValidationError } from "../../src/error";
 import { describe, expect, it } from "vitest";
 
 describe("ValidationError", () => {

@@ -1,4 +1,4 @@
-import { BaseError } from "../../src/index.js";
+import { BaseError } from "../../src/error";
 import { describe, expect, it } from "vitest";
 
 describe("BaseError", () => {

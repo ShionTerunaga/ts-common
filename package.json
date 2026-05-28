@@ -18,15 +18,41 @@
     "README.md"
   ],
   "type": "module",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
+    "./error": {
+      "types": "./dist/error/index.d.ts",
+      "default": "./dist/error/index.js"
+    },
+    "./is": {
+      "types": "./dist/is/index.d.ts",
+      "default": "./dist/is/index.js"
+    },
+    "./merger": {
+      "types": "./dist/merger/index.d.ts",
+      "default": "./dist/merger/index.js"
+    },
+    "./object": {
+      "types": "./dist/object/index.d.ts",
+      "default": "./dist/object/index.js"
+    },
+    "./option": {
+      "types": "./dist/option/index.d.ts",
+      "default": "./dist/option/index.js"
+    },
+    "./result": {
+      "types": "./dist/result/index.d.ts",
+      "default": "./dist/result/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/types/index.js"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run build:bundle && pnpm run build:types",
     "build:bundle": "rolldown -c rolldown.config.ts",
-    "build:types": "dts-bundle-generator --no-banner --project tsconfig.build.json -o dist/index.d.ts src/index.ts",
+    "build:types": "node --experimental-strip-types ./scripts/build-types.ts",
     "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\"",
     "prepare": "lefthook install",
     "typecheck": "tsgo --noEmit -p tsconfig.json",

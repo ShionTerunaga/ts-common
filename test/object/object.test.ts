@@ -1,4 +1,4 @@
-import { omitElementObject } from "../../src/index.js";
+import { omitElementObject } from "../../src/object";
 import { describe, expect, it } from "vitest";
 
 describe("object", () => {
