@@ -3,9 +3,9 @@
   "compilerOptions": {
     "noEmit": false,
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "allowImportingTsExtensions": false,
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "declaration": true,
     "declarationMap": false,
     "sourceMap": false,

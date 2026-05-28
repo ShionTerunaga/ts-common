@@ -53,7 +53,12 @@ import { createSome } from "ts-utility-kit/option";
 エラー名、コード、HTTP status、追加メタデータをそろえて扱いたいときに使います。
 
 ```ts
-import { BadRequestError, NotFoundError, SchemeError, ValidationError } from "ts-utility-kit/error";
+import {
+  BadRequestError,
+  NotFoundError,
+  SchemeError,
+  ValidationError,
+} from "ts-utility-kit/error";
 
 throw new ValidationError({
   field: "email",
@@ -126,7 +131,13 @@ const safeUser = omitElementObject(user, ["password"]);
 nullable な値を `Some` / `None` として明示的に扱いたいときに使います。
 
 ```ts
-import { createNone, createSome, isNone, isSome, optionConversion } from "ts-utility-kit/option";
+import {
+  createNone,
+  createSome,
+  isNone,
+  isSome,
+  optionConversion,
+} from "ts-utility-kit/option";
 
 const token = optionConversion(process.env.API_TOKEN);
 
@@ -153,7 +164,14 @@ const empty = createNone<string>();
 例外をそのまま投げる代わりに、成功と失敗を `Result<T, E>` として返したいときに使います。
 
 ```ts
-import { UNIT, checkPromiseReturn, createErr, createOk, isErr, isOk } from "ts-utility-kit/result";
+import {
+  UNIT,
+  checkPromiseReturn,
+  createErr,
+  createOk,
+  isErr,
+  isOk,
+} from "ts-utility-kit/result";
 
 const result = await checkPromiseReturn({
   fn: async () => fetchUser(),
@@ -191,11 +209,11 @@ const done = createOk(UNIT);
 ```ts
 import type { Dict, Without } from "ts-utility-kit/types";
 
-type User = {
+interface User {
   id: string;
   name: string;
   password: string;
-};
+}
 
 type PublicUser = Without<User, "password">;
 type UserMap = Dict<PublicUser>;
@@ -207,24 +225,3 @@ type UserMap = Dict<PublicUser>;
 - `Without<T, K>`
 
 ビルド済みファイルを `release` ブランチに含めているため、ビルドスクリプトを実行せずにこの GitHub リポジトリを直接インストールできます。
-
-## 開発
-
-```bash
-pnpm install
-pnpm check
-pnpm test
-pnpm build
-```
-
-`pnpm build` では、ライブラリのエントリポイントを Rolldown で bundle しつつ、公開型定義を `dts-bundle-generator` で `dist/index.d.ts` 1 ファイルにまとめます。型チェック自体は引き続き TypeScript 7 beta (`tsgo`) です。
-
-## リリースフロー
-
-ユーザー向けの変更を含む PR では、事前に changeset を作成してください。
-
-```bash
-pnpm changeset
-```
-
-`Release PR` workflow が Changesets の release PR を `main` 向けに自動で作成または更新します。その release PR ブランチ (`changeset-release/main`) が `main` にマージされると、`Sync Release` workflow がそのコミットを `release` に反映します。`release` 更新後は `Publish Release` workflow が最新の `CHANGELOG.md` エントリから release note を生成し、タグ作成と GitHub Release の作成または更新を行います。その後 `Publish npm Package` workflow が GitHub Release の公開をきっかけに実行され、OIDC trusted publishing で npm へ同じバージョンを公開します。

@@ -28,6 +28,8 @@ describe("SchemeError", () => {
       receivedScheme: "https",
     });
 
-    expect(error.message).toBe('Invalid scheme: expected one of [mailto], received "https"');
+    expect(error.message).toBe(
+      'Invalid scheme: expected one of [mailto], received "https"',
+    );
   });
 });

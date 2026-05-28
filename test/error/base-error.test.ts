@@ -27,7 +27,9 @@ describe("BaseError", () => {
       details: { retryable: false },
     });
 
-    expect(Object.prototype.propertyIsEnumerable.call(error, "cause")).toBeFalsy();
+    expect(
+      Object.prototype.propertyIsEnumerable.call(error, "cause"),
+    ).toBeFalsy();
     expect(error.cause).toBe(cause);
   });
 });

@@ -1,4 +1,10 @@
-import { createNone, createSome, isNone, isSome, optionConversion } from "../../src/option";
+import {
+  createNone,
+  createSome,
+  isNone,
+  isSome,
+  optionConversion,
+} from "../../src/option";
 import { describe, expect, it } from "vitest";
 
 describe("option", () => {
