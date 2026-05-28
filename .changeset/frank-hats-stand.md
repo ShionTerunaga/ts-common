@@ -1,5 +1,5 @@
 ---
-"ts-shared": major
+"ts-utility-kit": major
 ---
 
 Refactor the `Result` API by splitting it into `result-core` and `result-process`, and re-export the new modules from the package entrypoint.

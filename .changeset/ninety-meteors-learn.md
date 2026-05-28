@@ -1,5 +1,5 @@
 ---
-"ts-shared": patch
+"ts-utility-kit": patch
 ---
 
 I removed the unnecessary functions.

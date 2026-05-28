@@ -3,7 +3,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "ShionTerunaga/ts-shared"
+      "repo": "ShionTerunaga/ts-utility-kit"
     }
   ],
   "commit": false,

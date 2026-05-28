@@ -1,5 +1,5 @@
 ---
-"ts-shared": patch
+"ts-utility-kit": patch
 ---
 
 Eliminate unnecessary if statements
