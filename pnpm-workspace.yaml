@@ -10,7 +10,7 @@ catalog:
   "@typescript/native-preview": beta
   oxfmt: ^0.45.0
   oxlint: ^1.60.0
-  vitest: ^3.2.3
+  vitest: ^4.1.0
 
 catalogMode: prefer
 overrides:
