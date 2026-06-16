@@ -1,16 +1,34 @@
 import { BaseError, type BaseErrorOptions } from "./base-error";
 
+/**
+ * Options for constructing HTTP-related errors.
+ *
+ * Shape: `{ ...BaseErrorOptions, expose?, status?, statusText? }`.
+ * `expose` controls whether the message is safe for clients, `status` stores the HTTP status code,
+ * and `statusText` stores the associated reason phrase.
+ */
 export interface HttpErrorOptions extends BaseErrorOptions {
+  /** Whether the error message can be safely exposed to clients. */
   expose?: boolean;
+  /** HTTP status code. */
   status?: number;
+  /** Text description associated with the HTTP status. */
   statusText?: string;
 }
 
+/**
+ * Base error that includes HTTP status metadata.
+ */
 export class BaseHttpError extends BaseError {
   expose: boolean;
   status: number;
   statusText: string;
 
+  /**
+   * Creates a `BaseHttpError` instance.
+   *
+   * @param options Configuration including HTTP status and exposure settings.
+   */
   constructor(options: HttpErrorOptions = {}) {
     const {
       cause,
@@ -37,7 +55,13 @@ export class BaseHttpError extends BaseError {
   }
 }
 
+/** Error representing HTTP 401 Unauthorized. */
 export class UnauthorizedError extends BaseHttpError {
+  /**
+   * Creates an `UnauthorizedError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "UNAUTHORIZED",
@@ -51,7 +75,13 @@ export class UnauthorizedError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 400 Bad Request. */
 export class BadRequestError extends BaseHttpError {
+  /**
+   * Creates a `BadRequestError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "BAD_REQUEST",
@@ -65,7 +95,13 @@ export class BadRequestError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 402 Payment Required. */
 export class PaymentRequiredError extends BaseHttpError {
+  /**
+   * Creates a `PaymentRequiredError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "PAYMENT_REQUIRED",
@@ -79,7 +115,13 @@ export class PaymentRequiredError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 403 Forbidden. */
 export class ForbiddenError extends BaseHttpError {
+  /**
+   * Creates a `ForbiddenError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "FORBIDDEN",
@@ -93,7 +135,13 @@ export class ForbiddenError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 405 Method Not Allowed. */
 export class MethodNotAllowedError extends BaseHttpError {
+  /**
+   * Creates a `MethodNotAllowedError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "METHOD_NOT_ALLOWED",
@@ -107,7 +155,13 @@ export class MethodNotAllowedError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 406 Not Acceptable. */
 export class NotAcceptableError extends BaseHttpError {
+  /**
+   * Creates a `NotAcceptableError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "NOT_ACCEPTABLE",
@@ -121,7 +175,13 @@ export class NotAcceptableError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 407 Proxy Authentication Required. */
 export class ProxyAuthenticationRequiredError extends BaseHttpError {
+  /**
+   * Creates a `ProxyAuthenticationRequiredError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "PROXY_AUTHENTICATION_REQUIRED",
@@ -135,7 +195,13 @@ export class ProxyAuthenticationRequiredError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 404 Not Found. */
 export class NotFoundError extends BaseHttpError {
+  /**
+   * Creates a `NotFoundError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "NOT_FOUND",
@@ -149,7 +215,13 @@ export class NotFoundError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 409 Conflict. */
 export class ConflictError extends BaseHttpError {
+  /**
+   * Creates a `ConflictError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "CONFLICT",
@@ -163,7 +235,13 @@ export class ConflictError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 410 Gone. */
 export class GoneError extends BaseHttpError {
+  /**
+   * Creates a `GoneError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "GONE",
@@ -177,7 +255,13 @@ export class GoneError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 412 Precondition Failed. */
 export class PreconditionFailedError extends BaseHttpError {
+  /**
+   * Creates a `PreconditionFailedError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "PRECONDITION_FAILED",
@@ -191,7 +275,13 @@ export class PreconditionFailedError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 413 Payload Too Large. */
 export class PayloadTooLargeError extends BaseHttpError {
+  /**
+   * Creates a `PayloadTooLargeError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "PAYLOAD_TOO_LARGE",
@@ -205,7 +295,13 @@ export class PayloadTooLargeError extends BaseHttpError {
   }
 }
 
+/** Error representing HTTP 415 Unsupported Media Type. */
 export class UnsupportedMediaTypeError extends BaseHttpError {
+  /**
+   * Creates an `UnsupportedMediaTypeError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "UNSUPPORTED_MEDIA_TYPE",
@@ -220,6 +316,11 @@ export class UnsupportedMediaTypeError extends BaseHttpError {
 }
 
 export class UnprocessableEntityError extends BaseHttpError {
+  /**
+   * Creates an `UnprocessableEntityError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "UNPROCESSABLE_ENTITY",
@@ -234,6 +335,11 @@ export class UnprocessableEntityError extends BaseHttpError {
 }
 
 export class TooManyRequestsError extends BaseHttpError {
+  /**
+   * Creates a `TooManyRequestsError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "TOO_MANY_REQUESTS",
@@ -248,6 +354,11 @@ export class TooManyRequestsError extends BaseHttpError {
 }
 
 export class TimeoutError extends BaseHttpError {
+  /**
+   * Creates a `TimeoutError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "REQUEST_TIMEOUT",
@@ -262,6 +373,11 @@ export class TimeoutError extends BaseHttpError {
 }
 
 export class InternalServerError extends BaseHttpError {
+  /**
+   * Creates an `InternalServerError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "INTERNAL_SERVER_ERROR",
@@ -276,6 +392,11 @@ export class InternalServerError extends BaseHttpError {
 }
 
 export class NotImplementedError extends BaseHttpError {
+  /**
+   * Creates a `NotImplementedError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "NOT_IMPLEMENTED",
@@ -290,6 +411,11 @@ export class NotImplementedError extends BaseHttpError {
 }
 
 export class BadGatewayError extends BaseHttpError {
+  /**
+   * Creates a `BadGatewayError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "BAD_GATEWAY",
@@ -304,6 +430,11 @@ export class BadGatewayError extends BaseHttpError {
 }
 
 export class ServiceUnavailableError extends BaseHttpError {
+  /**
+   * Creates a `ServiceUnavailableError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "SERVICE_UNAVAILABLE",
@@ -318,6 +449,11 @@ export class ServiceUnavailableError extends BaseHttpError {
 }
 
 export class GatewayTimeoutError extends BaseHttpError {
+  /**
+   * Creates a `GatewayTimeoutError` with default HTTP metadata.
+   *
+   * @param options Optional overrides for the default HTTP error fields.
+   */
   constructor(options: HttpErrorOptions = {}) {
     super({
       code: "GATEWAY_TIMEOUT",
