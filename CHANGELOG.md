@@ -1,5 +1,11 @@
 # ts-utility-kit
 
+## 2.1.0
+
+### Minor Changes
+
+- [`4b16325`](https://github.com/ShionTerunaga/ts-utility-kit/commit/4b16325feee7fe65683bb98904e82c229b176370) Thanks [@github-actions[bot]](https://github.com/github-actions%5Bbot%5D)! - I added JSDoc and exported a few types.
+
 ## 2.0.0
 
 ### Major Changes
