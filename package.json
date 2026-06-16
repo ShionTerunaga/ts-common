@@ -1,0 +1,55 @@
+{
+  "name": "ts-utility-kit",
+  "version": "2.1.0",
+  "description": "Shared TypeScript utilities with generated type definitions.",
+  "homepage": "https://github.com/ShionTerunaga/ts-shared#readme",
+  "bugs": {
+    "url": "https://github.com/ShionTerunaga/ts-shared/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShionTerunaga/ts-shared.git"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    "./error": {
+      "types": "./dist/error/index.d.ts",
+      "default": "./dist/error/index.js"
+    },
+    "./is": {
+      "types": "./dist/is/index.d.ts",
+      "default": "./dist/is/index.js"
+    },
+    "./merger": {
+      "types": "./dist/merger/index.d.ts",
+      "default": "./dist/merger/index.js"
+    },
+    "./object": {
+      "types": "./dist/object/index.d.ts",
+      "default": "./dist/object/index.js"
+    },
+    "./option": {
+      "types": "./dist/option/index.d.ts",
+      "default": "./dist/option/index.js"
+    },
+    "./result": {
+      "types": "./dist/result/index.d.ts",
+      "default": "./dist/result/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/types/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
