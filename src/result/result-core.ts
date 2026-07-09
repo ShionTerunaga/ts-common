@@ -1,6 +1,6 @@
 const basic = {
-  RESULT_OK: "ok",
-  RESULT_NG: "ng",
+    RESULT_OK: "ok",
+    RESULT_NG: "ng",
 } as const;
 
 /**
@@ -12,10 +12,10 @@ const basic = {
  * @template T Type of the success value stored in `value`.
  */
 export interface Ok<T> {
-  /** Discriminant used to identify the success branch. */
-  readonly kind: typeof basic.RESULT_OK;
-  /** Value carried by the success branch. */
-  readonly value: T;
+    /** Discriminant used to identify the success branch. */
+    readonly kind: typeof basic.RESULT_OK;
+    /** Value carried by the success branch. */
+    readonly value: T;
 }
 
 /**
@@ -27,10 +27,10 @@ export interface Ok<T> {
  * @template E Type of the error value stored in `err`.
  */
 export interface Err<E> {
-  /** Discriminant used to identify the failure branch. */
-  readonly kind: typeof basic.RESULT_NG;
-  /** Error value carried by the failure branch. */
-  readonly err: E;
+    /** Discriminant used to identify the failure branch. */
+    readonly kind: typeof basic.RESULT_NG;
+    /** Error value carried by the failure branch. */
+    readonly err: E;
 }
 
 /**
@@ -49,7 +49,7 @@ export type Result<T, E> = Ok<NonNullable<T>> | Err<NonNullable<E>>;
  * @returns A `Result<T, never>` representing success.
  */
 export function createOk<T>(value: NonNullable<T>): Result<T, never> {
-  return { kind: basic.RESULT_OK, value };
+    return { kind: basic.RESULT_OK, value };
 }
 
 /**
@@ -60,7 +60,7 @@ export function createOk<T>(value: NonNullable<T>): Result<T, never> {
  * @returns A `Result<never, E>` representing failure.
  */
 export function createErr<E>(err: NonNullable<E>): Result<never, E> {
-  return { kind: basic.RESULT_NG, err };
+    return { kind: basic.RESULT_NG, err };
 }
 
 /**
@@ -72,7 +72,7 @@ export function createErr<E>(err: NonNullable<E>): Result<never, E> {
  * @returns `true` when the result is successful, allowing safe access to `value`.
  */
 export function isOk<T, E>(result: Result<T, E>): result is Ok<NonNullable<T>> {
-  return result.kind === basic.RESULT_OK;
+    return result.kind === basic.RESULT_OK;
 }
 
 /**
@@ -84,5 +84,5 @@ export function isOk<T, E>(result: Result<T, E>): result is Ok<NonNullable<T>> {
  * @returns `true` when the result is failed, allowing safe access to `err`.
  */
 export function isErr<T, E>(result: Result<T, E>): result is Err<NonNullable<E>> {
-  return result.kind === basic.RESULT_NG;
+    return result.kind === basic.RESULT_NG;
 }

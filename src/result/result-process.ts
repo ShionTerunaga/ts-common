@@ -11,12 +11,12 @@ import { type Result, createOk } from "./result-core";
  * @template E Type returned on failure.
  */
 interface CheckResultReturn<T, E> {
-  /** Synchronous function to execute. Must return a non-nullable value. */
-  fn: () => NonNullable<T>;
-  /** Mapper that converts a thrown value into a failed `Result`. */
-  err: (e: unknown) => Result<never, NonNullable<E>>;
-  /** Cleanup callback that always runs after execution. */
-  finalFn?: () => void;
+    /** Synchronous function to execute. Must return a non-nullable value. */
+    fn: () => NonNullable<T>;
+    /** Mapper that converts a thrown value into a failed `Result`. */
+    err: (e: unknown) => Result<never, NonNullable<E>>;
+    /** Cleanup callback that always runs after execution. */
+    finalFn?: () => void;
 }
 
 /**
@@ -29,12 +29,12 @@ interface CheckResultReturn<T, E> {
  * @template E Type returned on failure.
  */
 interface CheckResultVoid<E> {
-  /** Synchronous function to execute. */
-  fn: () => void;
-  /** Mapper that converts a thrown value into a failed `Result`. */
-  err: (e: unknown) => Result<never, NonNullable<E>>;
-  /** Cleanup callback that always runs after execution. */
-  finalFn?: () => void;
+    /** Synchronous function to execute. */
+    fn: () => void;
+    /** Mapper that converts a thrown value into a failed `Result`. */
+    err: (e: unknown) => Result<never, NonNullable<E>>;
+    /** Cleanup callback that always runs after execution. */
+    finalFn?: () => void;
 }
 
 /**
@@ -48,12 +48,12 @@ interface CheckResultVoid<E> {
  * @template E Type returned on failure.
  */
 interface CheckPromiseReturn<T, E> {
-  /** Async function to execute. Must resolve to a non-nullable value. */
-  fn: () => Promise<NonNullable<T>>;
-  /** Mapper that converts a thrown value into a failed `Result`. */
-  err: (e: unknown) => Result<never, NonNullable<E>>;
-  /** Cleanup callback that always runs after execution. */
-  finalFn?: () => void;
+    /** Async function to execute. Must resolve to a non-nullable value. */
+    fn: () => Promise<NonNullable<T>>;
+    /** Mapper that converts a thrown value into a failed `Result`. */
+    err: (e: unknown) => Result<never, NonNullable<E>>;
+    /** Cleanup callback that always runs after execution. */
+    finalFn?: () => void;
 }
 
 /**
@@ -66,12 +66,12 @@ interface CheckPromiseReturn<T, E> {
  * @template E Type returned on failure.
  */
 interface CheckPromiseVoid<E> {
-  /** Async function to execute. */
-  fn: () => Promise<void>;
-  /** Mapper that converts a thrown value into a failed `Result`. */
-  err: (e: unknown) => Result<never, NonNullable<E>>;
-  /** Cleanup callback that always runs after execution. */
-  finalFn?: () => void;
+    /** Async function to execute. */
+    fn: () => Promise<void>;
+    /** Mapper that converts a thrown value into a failed `Result`. */
+    err: (e: unknown) => Result<never, NonNullable<E>>;
+    /** Cleanup callback that always runs after execution. */
+    finalFn?: () => void;
 }
 
 const UNIT_SYMBOL = Symbol("UNIT_SYMBOL");
@@ -83,15 +83,15 @@ const UNIT_SYMBOL = Symbol("UNIT_SYMBOL");
  * `_unit` is a unique symbol marker used to distinguish this no-value success type.
  */
 export interface Unit {
-  /** Unique symbol used to identify the `Unit` shape. */
-  readonly _unit: typeof UNIT_SYMBOL;
+    /** Unique symbol used to identify the `Unit` shape. */
+    readonly _unit: typeof UNIT_SYMBOL;
 }
 
 /**
  * Shared instance used for successful operations with no return value.
  */
 export const UNIT: Unit = Object.freeze({
-  _unit: UNIT_SYMBOL,
+    _unit: UNIT_SYMBOL,
 });
 
 /**
@@ -105,19 +105,19 @@ export const UNIT: Unit = Object.freeze({
  * @returns A `Promise<Result<Unit, E>>` containing `UNIT` on success or the mapped error on failure.
  */
 export async function checkPromiseVoid<E>({
-  fn,
-  err,
-  finalFn = () => {},
+    fn,
+    err,
+    finalFn = () => {},
 }: CheckPromiseVoid<E>): Promise<Result<Unit, E>> {
-  try {
-    await fn();
+    try {
+        await fn();
 
-    return createOk(UNIT);
-  } catch (e) {
-    return err(e);
-  } finally {
-    finalFn();
-  }
+        return createOk(UNIT);
+    } catch (e) {
+        return err(e);
+    } finally {
+        finalFn();
+    }
 }
 
 /**
@@ -132,19 +132,19 @@ export async function checkPromiseVoid<E>({
  * @returns A `Result<T, E>` containing the return value on success or the mapped error on failure.
  */
 export function checkResultReturn<T, E>({
-  fn,
-  err,
-  finalFn = () => {},
+    fn,
+    err,
+    finalFn = () => {},
 }: CheckResultReturn<T, E>): Result<T, E> {
-  try {
-    const result = fn();
+    try {
+        const result = fn();
 
-    return createOk(result);
-  } catch (e) {
-    return err(e);
-  } finally {
-    finalFn();
-  }
+        return createOk(result);
+    } catch (e) {
+        return err(e);
+    } finally {
+        finalFn();
+    }
 }
 
 /**
@@ -158,19 +158,19 @@ export function checkResultReturn<T, E>({
  * @returns A `Result<Unit, E>` containing `UNIT` on success or the mapped error on failure.
  */
 export function checkResultVoid<E>({
-  fn,
-  err,
-  finalFn = () => {},
+    fn,
+    err,
+    finalFn = () => {},
 }: CheckResultVoid<E>): Result<Unit, E> {
-  try {
-    fn();
+    try {
+        fn();
 
-    return createOk(UNIT);
-  } catch (e) {
-    return err(e);
-  } finally {
-    finalFn();
-  }
+        return createOk(UNIT);
+    } catch (e) {
+        return err(e);
+    } finally {
+        finalFn();
+    }
 }
 
 /**
@@ -185,17 +185,17 @@ export function checkResultVoid<E>({
  * @returns A `Promise<Result<T, E>>` containing the resolved value on success or the mapped error on failure.
  */
 export async function checkPromiseReturn<T, E>({
-  fn,
-  err,
-  finalFn = () => {},
+    fn,
+    err,
+    finalFn = () => {},
 }: CheckPromiseReturn<T, E>): Promise<Result<T, E>> {
-  try {
-    const result = await fn();
+    try {
+        const result = await fn();
 
-    return createOk(result);
-  } catch (e) {
-    return err(e);
-  } finally {
-    finalFn();
-  }
+        return createOk(result);
+    } catch (e) {
+        return err(e);
+    } finally {
+        finalFn();
+    }
 }

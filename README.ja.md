@@ -56,17 +56,17 @@ import { createSome } from "ts-utility-kit/option";
 import { BadRequestError, NotFoundError, SchemeError, ValidationError } from "ts-utility-kit/error";
 
 throw new ValidationError({
-  field: "email",
-  issues: [{ path: "email", message: "Invalid format" }],
+    field: "email",
+    issues: [{ path: "email", message: "Invalid format" }],
 });
 
 throw new SchemeError({
-  allowedSchemes: ["https"],
-  receivedScheme: "http",
+    allowedSchemes: ["https"],
+    receivedScheme: "http",
 });
 
 throw new NotFoundError({
-  details: { resource: "user", id: "42" },
+    details: { resource: "user", id: "42" },
 });
 ```
 
@@ -86,11 +86,11 @@ nullable な値や `unknown` を絞り込みたいときの小さな型ガード
 import { isNull, isUndefined } from "ts-utility-kit/is";
 
 function normalize(value: unknown) {
-  if (isNull(value) || isUndefined(value)) {
-    return "empty";
-  }
+    if (isNull(value) || isUndefined(value)) {
+        return "empty";
+    }
 
-  return String(value);
+    return String(value);
 }
 ```
 
@@ -113,9 +113,9 @@ object から特定のキーを除いた新しい値を作りたいときに使�
 import { omitElementObject } from "ts-utility-kit/object";
 
 const user = {
-  id: 1,
-  name: "Shion",
-  password: "secret",
+    id: 1,
+    name: "Shion",
+    password: "secret",
 };
 
 const safeUser = omitElementObject(user, ["password"]);
@@ -131,7 +131,7 @@ import { createNone, createSome, isNone, isSome, optionConversion } from "ts-uti
 const token = optionConversion(process.env.API_TOKEN);
 
 if (isSome(token)) {
-  console.log(token.value);
+    console.log(token.value);
 }
 
 const fallback = isNone(token) ? "guest" : token.value;
@@ -156,16 +156,16 @@ const empty = createNone<string>();
 import { UNIT, checkPromiseReturn, createErr, createOk, isErr, isOk } from "ts-utility-kit/result";
 
 const result = await checkPromiseReturn({
-  fn: async () => fetchUser(),
-  err: (error) => createErr(error),
+    fn: async () => fetchUser(),
+    err: (error) => createErr(error),
 });
 
 if (isOk(result)) {
-  console.log(result.value);
+    console.log(result.value);
 }
 
 if (isErr(result)) {
-  console.error(result.err);
+    console.error(result.err);
 }
 
 const done = createOk(UNIT);
@@ -192,9 +192,9 @@ const done = createOk(UNIT);
 import type { Dict, Without } from "ts-utility-kit/types";
 
 interface User {
-  id: string;
-  name: string;
-  password: string;
+    id: string;
+    name: string;
+    password: string;
 }
 
 type PublicUser = Without<User, "password">;

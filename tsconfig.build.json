@@ -1,17 +1,17 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "noEmit": false,
-    "target": "ES2022",
-    "module": "preserve",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "declaration": true,
-    "declarationMap": false,
-    "sourceMap": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "emitDeclarationOnly": true
-  },
-  "include": ["src"]
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "target": "ES2022",
+        "module": "preserve",
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "declaration": true,
+        "declarationMap": false,
+        "sourceMap": false,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "emitDeclarationOnly": true
+    },
+    "include": ["src"]
 }

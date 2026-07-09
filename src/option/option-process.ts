@@ -8,9 +8,9 @@ import { type Option, createNone, createSome } from "./option-core";
  * @returns `None` for `null` or `undefined`, otherwise `Some`.
  */
 export function optionConversion<T>(value: T): Option<T> {
-  if (value === null || value === undefined) {
-    return createNone();
-  }
+    if (value === null || value === undefined) {
+        return createNone();
+    }
 
-  return createSome(value);
+    return createSome(value);
 }

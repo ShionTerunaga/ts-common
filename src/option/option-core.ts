@@ -1,6 +1,6 @@
 const basic = {
-  OPTION_SOME: "some",
-  OPTION_NONE: "none",
+    OPTION_SOME: "some",
+    OPTION_NONE: "none",
 } as const;
 
 /**
@@ -12,10 +12,10 @@ const basic = {
  * @template T Type of the stored `value`.
  */
 export interface Some<T> {
-  /** Discriminant used to identify the value-present branch. */
-  readonly kind: typeof basic.OPTION_SOME;
-  /** Stored value. */
-  readonly value: T;
+    /** Discriminant used to identify the value-present branch. */
+    readonly kind: typeof basic.OPTION_SOME;
+    /** Stored value. */
+    readonly value: T;
 }
 
 /**
@@ -25,8 +25,8 @@ export interface Some<T> {
  * `kind` is the discriminant for the empty branch.
  */
 export interface None {
-  /** Discriminant used to identify the empty branch. */
-  readonly kind: typeof basic.OPTION_NONE;
+    /** Discriminant used to identify the empty branch. */
+    readonly kind: typeof basic.OPTION_NONE;
 }
 
 /**
@@ -44,10 +44,10 @@ export type Option<T> = Some<NonNullable<T>> | None;
  * @returns A value-present `Option<T>`.
  */
 export function createSome<T>(value: NonNullable<T>): Option<T> {
-  return {
-    kind: basic.OPTION_SOME,
-    value,
-  };
+    return {
+        kind: basic.OPTION_SOME,
+        value,
+    };
 }
 
 /**
@@ -57,9 +57,9 @@ export function createSome<T>(value: NonNullable<T>): Option<T> {
  * @returns An empty `Option<NonNullable<T>>`.
  */
 export function createNone<T>(): Option<NonNullable<T>> {
-  return {
-    kind: basic.OPTION_NONE,
-  };
+    return {
+        kind: basic.OPTION_NONE,
+    };
 }
 
 /**
@@ -70,7 +70,7 @@ export function createNone<T>(): Option<NonNullable<T>> {
  * @returns `true` when the option contains a value, allowing safe access to `value`.
  */
 export function isSome<T>(option: Option<NonNullable<T>>): option is Some<NonNullable<T>> {
-  return option.kind === basic.OPTION_SOME;
+    return option.kind === basic.OPTION_SOME;
 }
 
 /**
@@ -81,5 +81,5 @@ export function isSome<T>(option: Option<NonNullable<T>>): option is Some<NonNul
  * @returns `true` when the option is empty.
  */
 export function isNone<T>(option: Option<T>): option is None {
-  return option.kind === basic.OPTION_NONE;
+    return option.kind === basic.OPTION_NONE;
 }

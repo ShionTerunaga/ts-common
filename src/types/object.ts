@@ -15,7 +15,7 @@ export type Dict<T> = Record<string, T>;
  * @template K Keys to exclude.
  */
 export type Without<T, K extends keyof T> = {
-  [P in Exclude<keyof T, K>]: T[P];
+    [P in Exclude<keyof T, K>]: T[P];
 } & {
-  [P in K]?: never;
+    [P in K]?: never;
 };

@@ -5,7 +5,7 @@
  * @returns `true` only when the value is `null`.
  */
 export function isNull(value: unknown): value is null {
-  return value === null;
+    return value === null;
 }
 
 /**
@@ -15,5 +15,5 @@ export function isNull(value: unknown): value is null {
  * @returns `true` only when the value is `undefined`.
  */
 export function isUndefined(value: unknown): value is undefined {
-  return value === undefined;
+    return value === undefined;
 }
