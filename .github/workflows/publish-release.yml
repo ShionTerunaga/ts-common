@@ -1,41 +1,41 @@
 name: Publish Release
 
 on:
-    workflow_run:
-        workflows:
-            - Sync Release Branch
-        types:
-            - completed
-    workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Sync Release Branch
+    types:
+      - completed
+  workflow_dispatch:
 
 permissions:
-    contents: write
+  contents: write
 
 concurrency:
-    group: publish-release-${{ github.ref }}
-    cancel-in-progress: false
+  group: publish-release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-    publish-github-release:
-        if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
-        runs-on: ubuntu-latest
+  publish-github-release:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout main
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-                  ref: main
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22.12.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
 
-            - name: Fetch release branch and tags
-              run: git fetch origin main release --tags --force
+      - name: Fetch release branch and tags
+        run: git fetch origin main release --tags --force
 
-            - name: Publish tag and GitHub release
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: node --experimental-strip-types ./scripts/publish-github-release.ts
+      - name: Publish tag and GitHub release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node --experimental-strip-types ./scripts/publish-github-release.ts

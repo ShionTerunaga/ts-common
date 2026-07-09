@@ -1,60 +1,60 @@
 name: Publish npm Package
 
 on:
-    release:
-        types:
-            - published
-    workflow_dispatch:
-        inputs:
-            tag:
-                description: "Tag to publish, for example v1.3.0"
-                required: true
-                type: string
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to publish, for example v1.3.0"
+        required: true
+        type: string
 
 permissions:
-    contents: read
-    id-token: write
+  contents: read
+  id-token: write
 
 concurrency:
-    group: publish-npm-${{ github.event.release.tag_name || inputs.tag }}
-    cancel-in-progress: false
+  group: publish-npm-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
 
 jobs:
-    publish-npm:
-        runs-on: ubuntu-latest
+  publish-npm:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout release tag
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-                  ref: ${{ github.event.release.tag_name || inputs.tag }}
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22.12.0
-                  registry-url: https://registry.npmjs.org
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          registry-url: https://registry.npmjs.org
 
-            - name: Read package metadata
-              id: pkg
-              run: |
-                  echo "name=$(node -p "require('./package.json').name")" >> "$GITHUB_OUTPUT"
-                  echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Read package metadata
+        id: pkg
+        run: |
+          echo "name=$(node -p "require('./package.json').name")" >> "$GITHUB_OUTPUT"
+          echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
-            - name: Check whether version is already published
-              id: published
-              run: |
-                  if npm view "${{ steps.pkg.outputs.name }}@${{ steps.pkg.outputs.version }}" version >/dev/null 2>&1; then
-                    echo "published=true" >> "$GITHUB_OUTPUT"
-                  else
-                    echo "published=false" >> "$GITHUB_OUTPUT"
-                  fi
+      - name: Check whether version is already published
+        id: published
+        run: |
+          if npm view "${{ steps.pkg.outputs.name }}@${{ steps.pkg.outputs.version }}" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
 
-            - name: Publish to npm
-              if: steps.published.outputs.published != 'true'
-              run: npm publish --access public --provenance
+      - name: Publish to npm
+        if: steps.published.outputs.published != 'true'
+        run: npm publish --access public --provenance
 
-            - name: Skip already published version
-              if: steps.published.outputs.published == 'true'
-              run: echo "Package ${{ steps.pkg.outputs.name }}@${{ steps.pkg.outputs.version }} is already published. Skipping."
+      - name: Skip already published version
+        if: steps.published.outputs.published == 'true'
+        run: echo "Package ${{ steps.pkg.outputs.name }}@${{ steps.pkg.outputs.version }} is already published. Skipping."
