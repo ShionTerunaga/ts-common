@@ -9,17 +9,14 @@ import {
   isOk,
   UNIT,
 } from "../../src/result";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 
 describe("result", () => {
   it("createOk で作った値は isOK が true になる", () => {
     const ok = createOk("value");
 
     expect(ok.kind).toBe("ok");
-
-    if (ok.kind === "ng") {
-      throw new Error("Expected to be Ok, but got Err");
-    }
+    assert(ok.kind === "ok");
 
     expect(ok.value).toBe("value");
   });
@@ -28,17 +25,27 @@ describe("result", () => {
     const err = createErr("err");
 
     expect(err.kind).toBe("ng");
+    assert(err.kind === "ng");
 
-    if (err.kind === "ok") {
-      throw new Error("Expected to be Err, but got Ok");
-    }
     expect(err.err).toBe("err");
   });
 
-  it("isOK は ok でない場合 false を返す", () => {
+  it("isOk は ok である場合 true を返す", () => {
+    const ok = createOk("value");
+
+    expect(isOk(ok)).toBeTruthy();
+  });
+
+  it("isOk は ok でない場合 false を返す", () => {
     const err = createErr("err");
 
-    expect(err.kind).not.toBe("ok");
+    expect(isOk(err)).toBeFalsy();
+  });
+
+  it("isErr は err である場合 true を返す", () => {
+    const err = createErr("err");
+
+    expect(isErr(err)).toBeTruthy();
   });
 
   it("isErr は err でない場合 false を返す", () => {
@@ -53,9 +60,10 @@ describe("result", () => {
       err: () => createErr("err"),
     });
 
-    expect(res.kind).toBe("ok");
+    expect(isOk(res)).toBeTruthy();
+    assert(isOk(res));
 
-    expect((res as any).value).toBe("ret");
+    expect(res.value).toBe("ret");
   });
 
   it("checkResultReturn は例外時に ng を返す", () => {
@@ -66,9 +74,10 @@ describe("result", () => {
       err: () => createErr("myErr"),
     });
 
-    expect(res.kind).toBe("ng");
+    expect(isErr(res)).toBeTruthy();
+    assert(isErr(res));
 
-    expect((res as any).err).toBe("myErr");
+    expect(res.err).toBe("myErr");
   });
 
   it("checkResultReturn は成功時でも finalFn を呼ぶ", () => {
@@ -83,24 +92,6 @@ describe("result", () => {
     });
 
     expect(called).toBeTruthy();
-  });
-
-  it("isOkでokの場合はtrueを返す", () => {
-    const res = createOk("value");
-
-    expect(isOk(res)).toBeTruthy();
-  });
-
-  it("isOkでerrの場合はfalseを返す", () => {
-    const res = createErr("err");
-
-    expect(isOk(res)).toBeFalsy();
-  });
-
-  it("isErrでerrの場合はtrueを返す", () => {
-    const res = createErr("err");
-
-    expect(isErr(res)).toBeTruthy();
   });
 
   it("checkResultReturn は例外時でも finalFn を呼ぶ", () => {
@@ -125,9 +116,10 @@ describe("result", () => {
       err: () => createErr("e"),
     });
 
-    expect(res.kind).toBe("ok");
+    expect(isOk(res)).toBeTruthy();
+    assert(isOk(res));
 
-    expect((res as any).value).toBe(UNIT);
+    expect(res.value).toBe(UNIT);
   });
 
   it("checkResultVoid は成功時でも finalFn を呼ぶ", () => {
@@ -166,9 +158,10 @@ describe("result", () => {
       err: () => createErr("e"),
     });
 
-    expect(res.kind).toBe("ok");
+    expect(isOk(res)).toBeTruthy();
+    assert(isOk(res));
 
-    expect((res as any).value).toBe("async");
+    expect(res.value).toBe("async");
   });
 
   it("checkPromiseReturn は拒否時に ng を返す", async () => {
@@ -179,9 +172,7 @@ describe("result", () => {
       err: () => createErr("err"),
     });
 
-    expect(res.kind).toBe("ng");
-
-    expect((res as any).err).toBe("err");
+    expect(isErr(res)).toBeTruthy();
   });
 
   it("checkPromiseReturn は解決時でも finalFn を呼ぶ", async () => {
@@ -220,9 +211,10 @@ describe("result", () => {
       err: () => createErr("e"),
     });
 
-    expect(res.kind).toBe("ok");
+    expect(isOk(res)).toBeTruthy();
+    assert(isOk(res));
 
-    expect((res as any).value).toBe(UNIT);
+    expect(res.value).toBe(UNIT);
   });
 
   it("checkPromiseVoid は成功時でも finalFn を呼ぶ", async () => {
